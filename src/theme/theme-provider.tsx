@@ -1,15 +1,15 @@
-import React, { FC, PropsWithChildren } from 'react'
-import { CssBaseline, ThemeProvider as TP, createTheme } from '@mui/material'
-import { useSelector } from 'react-redux'
-import { Store } from '../redux'
-import './font-family.css'
+import React, { FC, PropsWithChildren } from 'react';
+import { CssBaseline, ThemeProvider as TP, createTheme } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { Store } from '../redux';
+import './font-family.css';
 
 export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { mode } = useSelector((state: Store) => state.themeReducer)
+  const { mode } = useSelector((state: Store) => state.themeReducer);
 
   const theme = createTheme({
     palette: {
-      mode: 'dark',
+      mode,
       primary: {
         main: '#041c34',
       },
@@ -27,12 +27,12 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
         `,
       },
     },
-  })
+  });
 
   return (
     <TP theme={theme}>
       <CssBaseline />
       {children}
     </TP>
-  )
-}
+  );
+};

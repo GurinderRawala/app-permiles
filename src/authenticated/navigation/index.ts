@@ -1,1 +1,1 @@
-export * from './side-bar-navigation'
+export * from './provider';

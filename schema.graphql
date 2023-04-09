@@ -1,0 +1,824 @@
+"""
+Exposes a URL that specifies the behaviour of this scalar.
+"""
+directive @specifiedBy(
+  """
+  The URL that specifies the behaviour of this scalar.
+  """
+  url: String!
+) on SCALAR
+
+"""
+Address information
+"""
+input addressInput {
+  """
+  Unit number of bussiness or house number
+  """
+  unitNumber: String!
+
+  """
+  Street name
+  """
+  streetName: String!
+
+  """
+  Name of the city
+  """
+  city: String!
+
+  """
+  Name of the state/province
+  """
+  state: String!
+
+  """
+  Name of the country
+  """
+  country: String
+
+  """
+  Postal code for the address important
+  """
+  postalCode: String!
+}
+
+type broker {
+  id: String!
+  clientid: String!
+  name: String!
+  streetaddress: String!
+  city: String!
+  postalcode: String!
+  province: String!
+  country: String!
+  email: String!
+  phone: String!
+  contactname: String!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input brokerInput {
+  id: String
+  clientid: String
+  name: String
+  streetaddress: String
+  city: String
+  postalcode: String
+  province: String
+  country: String
+  email: String
+  phone: String
+  contactname: String
+  createdAt: Date
+  updatedAt: Date
+}
+
+type client {
+  id: String!
+  name: String!
+  legalname: String!
+  streetaddress: String!
+  city: String!
+  postalcode: String!
+  province: String!
+  country: String!
+  isActive: String!
+  email: String!
+  phone: String!
+  contactname: String!
+  startdate: Date!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input clientInput {
+  id: String
+  name: String
+  legalname: String
+  streetaddress: String
+  city: String
+  postalcode: String
+  province: String
+  country: String
+  isActive: String
+  email: String
+  phone: String
+  contactname: String
+  startdate: Date
+  createdAt: Date
+  updatedAt: Date
+}
+
+"""
+A special custom Scalar type for Dates that converts to a ISO formatted string
+"""
+scalar Date
+
+type driver {
+  id: String!
+  firstname: String!
+  lastname: String!
+  phone: String!
+  email: String!
+  password: String!
+  driver_id: String!
+  drivers_licence: String!
+  licence_state: String!
+  truckno: String!
+  clientid: String!
+  address: [String]!
+  awaitingSignup: Boolean!
+  filepath: [String]
+  reg_date: Date!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input driverInput {
+  id: String
+  firstname: String
+  lastname: String
+  phone: String
+  email: String
+  password: String
+  driver_id: String
+  drivers_licence: String
+  licence_state: String
+  truckno: String
+  clientid: String
+  address: [String]
+  awaitingSignup: Boolean
+  filepath: [String]
+  reg_date: Date
+  createdAt: Date
+  updatedAt: Date
+}
+
+type load {
+  id: String!
+  clientid: String!
+  assignedTo: String
+  tripId: String
+  brokerId: String!
+  loadId: Int
+  state: String!
+  shipper: [String]!
+  receiver: [String]!
+  poNumber: String!
+  trailerNo: String
+  commodity: String
+  hazmat: Boolean!
+  totalWeight: String
+  filepath: [String]
+  specialInstructions: String
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input loadInput {
+  id: String
+  clientid: String
+  assignedTo: String
+  tripId: String
+  brokerId: String
+  loadId: Int
+  state: String
+  shipper: [String]
+  receiver: [String]
+  poNumber: String
+  trailerNo: String
+  commodity: String
+  hazmat: Boolean
+  totalWeight: String
+  filepath: [String]
+  specialInstructions: String
+  createdAt: Date
+  updatedAt: Date
+}
+
+"""
+Load modified input information
+"""
+input loadModifiedInput {
+  """
+  The uuid of load, automatically generated if not provided
+  """
+  id: ID
+
+  """
+  Load assigned to (driverId: uuid)
+  """
+  assignedTo: ID
+
+  """
+  Load brokerId (brokerId: uuid)
+  """
+  brokerId: String
+
+  """
+  List of receivers (receiver: [string])
+  """
+  receiver: [receiverInput]!
+
+  """
+  List of shippers (shipper: [string])
+  """
+  shipper: [shipperInput]!
+
+  """
+  Commodity of the load (commodity: string)
+  """
+  commodity: String
+
+  """
+  Is load is hazmat yes or no? (hazmat: boolean)
+  """
+  hazmat: Boolean!
+
+  """
+  Po number (poNumber: string)
+  """
+  poNumber: String!
+
+  """
+  Special instructions (specialInstructions: string)
+  """
+  specialInstructions: String
+
+  """
+  State (state: string), CREATED | ASSIGNED | MOVING | DELIVERED | PAID
+  """
+  state: String!
+
+  """
+  Assigned Trailer number (trailerNo: string)
+  """
+  trailerNo: String
+
+  """
+  Total weight (totalWeight: string)
+  """
+  totalWeight: String
+}
+
+"""
+Mutating data
+"""
+type Mutation {
+  addTrailer(
+    """
+    Trailer input values
+    """
+    input: trailerInput
+  ): trailer
+  addTruck(
+    """
+    Truck input values
+    """
+    input: truckInput
+  ): truck
+  addUserAccount(
+    """
+    UserAccount input values
+    """
+    input: userAccountInput
+  ): userAccount
+  addLoad(
+    """
+    Load input values
+    """
+    input: loadModifiedInput
+  ): load
+  addBroker(
+    """
+    Broker input values
+    """
+    input: brokerInput
+  ): broker
+  addDriver(
+    """
+    Driver input values
+    """
+    input: driverInput
+  ): driver
+  addTrip(
+    """
+    Trip input values
+    """
+    input: TripModifiedInput
+  ): trip
+  addPayroll(
+    """
+    Payroll input values
+    """
+    input: payrollInput
+  ): payroll
+  updateTrailer(
+    """
+    Trailer input values
+    """
+    input: trailerInput
+
+    """
+    update where id match
+    """
+    id: String
+  ): trailer
+  updateTruck(
+    """
+    Truck input values
+    """
+    input: truckInput
+
+    """
+    update where id match
+    """
+    id: String
+  ): truck
+  updateUserAccount(
+    """
+    UserAccount input values
+    """
+    input: userAccountInput
+
+    """
+    update where id match
+    """
+    id: String
+  ): userAccount
+  updateLoad(
+    """
+    Load input values
+    """
+    input: loadInput
+
+    """
+    update where id match
+    """
+    id: String
+  ): load
+  updateBroker(
+    """
+    Broker input values
+    """
+    input: brokerInput
+
+    """
+    update where id match
+    """
+    id: String
+  ): broker
+  updateDriver(
+    """
+    Driver input values
+    """
+    input: driverInput
+
+    """
+    update where id match
+    """
+    id: String
+  ): driver
+  updateTrip(
+    """
+    Trip input values
+    """
+    input: tripInput
+
+    """
+    update where id match
+    """
+    id: String
+  ): trip
+  updatePayroll(
+    """
+    Payroll input values
+    """
+    input: payrollInput
+
+    """
+    update where id match
+    """
+    id: String
+  ): payroll
+  addClient(input: clientInput): client
+}
+
+type payroll {
+  id: String!
+  clientid: String!
+  payrollTo: String!
+  loadId: String!
+  brokerId: String
+  shipper: [String]!
+  receiver: [String]!
+  poNumber: String!
+  trailerNo: String
+  commodity: String
+  hazmat: Boolean!
+  totalWeight: String
+  filepath: [String]
+  totalMiles: Float
+  perMileRate: Float
+  totalHours: Float
+  perHourRate: Float
+  totalPay: Float
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input payrollInput {
+  id: String
+  clientid: String
+  payrollTo: String
+  loadId: String
+  brokerId: String
+  shipper: [String]
+  receiver: [String]
+  poNumber: String
+  trailerNo: String
+  commodity: String
+  hazmat: Boolean
+  totalWeight: String
+  filepath: [String]
+  totalMiles: Float
+  perMileRate: Float
+  totalHours: Float
+  perHourRate: Float
+  totalPay: Float
+  createdAt: Date
+  updatedAt: Date
+}
+
+"""
+Query data from graphql
+"""
+type Query {
+  trailers(
+    """
+    Find record using where expression
+    """
+    where: trailerInput
+
+    """
+    Field to order by
+    """
+    orderBy: String
+  ): [trailer]
+  trucks(
+    """
+    Find record using where expression
+    """
+    where: truckInput
+
+    """
+    Field to order by
+    """
+    orderBy: String
+  ): [truck]
+  userAccounts(
+    """
+    Find record using where expression
+    """
+    where: userAccountInput
+
+    """
+    Field to order by
+    """
+    orderBy: String
+  ): [userAccount]
+  loads(
+    """
+    Find record using where expression
+    """
+    where: loadInput
+
+    """
+    Field to order by
+    """
+    orderBy: String
+  ): [load]
+  brokers(
+    """
+    Find record using where expression
+    """
+    where: brokerInput
+
+    """
+    Field to order by
+    """
+    orderBy: String
+  ): [broker]
+  drivers(
+    """
+    Find record using where expression
+    """
+    where: driverInput
+
+    """
+    Field to order by
+    """
+    orderBy: String
+  ): [driver]
+  trips(
+    """
+    Find record using where expression
+    """
+    where: tripInput
+
+    """
+    Field to order by
+    """
+    orderBy: String
+  ): [trip]
+  payrolls(
+    """
+    Find record using where expression
+    """
+    where: payrollInput
+
+    """
+    Field to order by
+    """
+    orderBy: String
+  ): [payroll]
+  clients(
+    """
+    Find record using where expression
+    """
+    where: clientInput
+
+    """
+    Field to order by
+    """
+    orderBy: String
+  ): [client]
+}
+
+"""
+Receiver information
+"""
+input receiverInput {
+  """
+  StopID(uuid) for the receiver
+  """
+  stopID: ID!
+
+  """
+  The name of the receiver
+  """
+  receiverName: String!
+
+  """
+  Address of the receiver
+  """
+  address: addressInput!
+
+  """
+  Phone number of the receiver
+  """
+  phoneNumber: String
+
+  """
+  Email of the receiver
+  """
+  email: String
+
+  """
+  Arrival at the receiver
+  """
+  arrival: String
+
+  """
+  Depart at the receiver
+  """
+  depart: String
+
+  """
+  Delivery appointment date and time
+  """
+  deliveryAppointment: String
+}
+
+"""
+Shipper information
+"""
+input shipperInput {
+  """
+  StopID(uuid) for the shipper
+  """
+  stopID: ID!
+
+  """
+  The name of the shipper
+  """
+  shipperName: String!
+
+  """
+  Address of the shipper
+  """
+  address: addressInput!
+
+  """
+  Phone number of the shipper
+  """
+  phoneNumber: String
+
+  """
+  Email of the shipper
+  """
+  email: String
+
+  """
+  Arrival at the shipper
+  """
+  arrival: String
+
+  """
+  Depart at the shipper
+  """
+  depart: String
+
+  """
+  Pick up appointment date and time
+  """
+  pickUpAppointment: String
+}
+
+type trailer {
+  id: String!
+  clientid: String!
+  trailerAttributes: String!
+  model: String!
+  make: String!
+  year: String!
+  trailerNo: String!
+  vinNumber: String
+  licencePlate: String!
+  licenceState: String!
+  safetyExpire: String!
+  filepath: [String]
+  notes: String
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input trailerInput {
+  id: String
+  clientid: String
+  trailerAttributes: String
+  model: String
+  make: String
+  year: String
+  trailerNo: String
+  vinNumber: String
+  licencePlate: String
+  licenceState: String
+  safetyExpire: String
+  filepath: [String]
+  notes: String
+  createdAt: Date
+  updatedAt: Date
+}
+
+type trip {
+  id: String!
+  tripId: Int!
+  state: String!
+  clientid: String!
+  assignedTo: String!
+  tripInfo: [String]!
+  bol: [String]
+  pod: [String]
+  totalMiles: Float
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+"""
+Trip information
+"""
+input TripInfoInput {
+  """
+  The id of the load included in the trip
+  """
+  id: ID!
+}
+
+input tripInput {
+  id: String
+  tripId: Int
+  state: String
+  clientid: String
+  assignedTo: String
+  tripInfo: [String]
+  bol: [String]
+  pod: [String]
+  totalMiles: Float
+  createdAt: Date
+  updatedAt: Date
+}
+
+"""
+Trip input fields
+"""
+input TripModifiedInput {
+  """
+  The ID of the trip, automatically generated
+  """
+  id: ID
+
+  """
+  The driver ID of the assigned driver
+  """
+  assignedTo: ID!
+
+  """
+  The trip information
+  """
+  tripInfo: [TripInfoInput]!
+
+  """
+  State (state: string), CREATED | ASSIGNED | MOVING | DELIVERED | PAID
+  """
+  state: String!
+
+  """
+  Total miles of the trip
+  """
+  totalMiles: Float
+}
+
+type truck {
+  id: String!
+  clientid: String!
+  model: String!
+  make: String!
+  year: String!
+  truckNo: String!
+  vinNumber: String
+  licencePlate: String!
+  licenceState: String!
+  safetyExpire: String!
+  filepath: [String]
+  notes: String
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input truckInput {
+  id: String
+  clientid: String
+  model: String
+  make: String
+  year: String
+  truckNo: String
+  vinNumber: String
+  licencePlate: String
+  licenceState: String
+  safetyExpire: String
+  filepath: [String]
+  notes: String
+  createdAt: Date
+  updatedAt: Date
+}
+
+type userAccount {
+  id: String!
+  firstname: String!
+  lastname: String!
+  username: String!
+  email: String!
+  password: String!
+  company: String!
+  address: [String]
+  active: Boolean!
+  awaitingSignup: Boolean!
+  role: String
+  filepath: [String]
+  createdAt: Date!
+  updatedAt: Date!
+  clientid: String!
+  token: String
+}
+
+input userAccountInput {
+  id: String
+  firstname: String
+  lastname: String
+  username: String
+  email: String
+  password: String
+  company: String
+  address: [String]
+  active: Boolean
+  awaitingSignup: Boolean
+  role: String
+  filepath: [String]
+  createdAt: Date
+  updatedAt: Date
+  clientid: String
+  token: String
+}

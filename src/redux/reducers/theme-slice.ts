@@ -1,7 +1,7 @@
-import { SliceCaseReducers, createSlice } from '@reduxjs/toolkit'
+import { SliceCaseReducers, createSlice } from '@reduxjs/toolkit';
 
 export interface ThemeSliceState {
-  mode: 'light' | 'dark'
+  mode: 'light' | 'dark';
 }
 
 export const themeSlice = createSlice<
@@ -22,7 +22,7 @@ export const themeSlice = createSlice<
       mode: payload.payload,
     }),
   },
-})
-export const { changeTheme } = themeSlice.actions
+});
+export const { changeTheme } = themeSlice.actions;
 
-export const themeReducer = themeSlice.reducer
+export const themeReducer = themeSlice.reducer;
