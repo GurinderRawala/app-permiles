@@ -11,7 +11,7 @@ export const useToggleTheme = () => {
     dispatch(
       changeTheme({
         payload: storedMode,
-      }),
+      })
     );
   }, []);
 
@@ -22,10 +22,10 @@ export const useToggleTheme = () => {
       dispatch(
         changeTheme({
           payload: mode,
-        }),
+        })
       );
     },
-    [dispatch],
+    [dispatch]
   );
 
   return toggle;

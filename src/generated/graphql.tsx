@@ -16,7 +16,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** A special custom Scalar type for Dates that converts to a ISO formatted string  */
+  /** A special custom Scalar type for Dates that converts to a ISO formatted string */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Date: any;
 };
@@ -636,4 +636,16 @@ export type UserAccountInput = {
   readonly token: InputMaybe<Scalars['String']>;
   readonly updatedAt: InputMaybe<Scalars['Date']>;
   readonly username: InputMaybe<Scalars['String']>;
+};
+
+export type TrailersQueryVariables = Exact<{
+  where: InputMaybe<TrailerInput>;
+  orderBy: InputMaybe<Scalars['String']>;
+}>;
+
+export type TrailersQuery = {
+  readonly trailers: ReadonlyArray<{
+    readonly id: string;
+    readonly trailerNo: string;
+  } | null> | null;
 };

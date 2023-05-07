@@ -1,10 +1,12 @@
 import React, { FC } from 'react';
 import { NavigationProvider } from '../navigation';
-import { Box } from '@mui/material';
 import { EQUIPMENTS_ROUTES } from './route.definitions';
+import { TrailerGrid } from './components/trailer-grid';
 
-export const EquipmentPage: FC = () => (
-  <NavigationProvider pageTitle={EQUIPMENTS_ROUTES.TITLE}>
-    This is Equipment page
-  </NavigationProvider>
-);
+export const EquipmentPage: FC = () => {
+  return (
+    <NavigationProvider pageTitle={EQUIPMENTS_ROUTES.TITLE}>
+      <TrailerGrid />
+    </NavigationProvider>
+  );
+};

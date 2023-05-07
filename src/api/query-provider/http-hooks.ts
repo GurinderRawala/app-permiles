@@ -19,15 +19,15 @@ export const useHttpMutation = <
   TError = unknown,
   TVariables = void,
   TContext = unknown,
-  TOptions = UseHttpMutationOptions,
+  TOptions = UseHttpMutationOptions
 >(
   url: string,
   method: string,
-  options: TOptions | Record<string, unknown> = {},
+  options: TOptions | Record<string, unknown> = {}
 ) =>
   useMutation<TData, TError, TVariables, TContext>({
     ...options,
-    mutationFn: (data) => httpRequest<TData, TVariables>(url, method, data),
+    mutationFn: data => httpRequest<TData, TVariables>(url, method, data),
   });
 
 export const useHttpQuery = <
@@ -36,13 +36,13 @@ export const useHttpQuery = <
   TData extends TQueryFnData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
   TVariables = undefined,
-  TOptions = UseHttpQueryOptions,
+  TOptions = UseHttpQueryOptions
 >(
   QUERY_KEY: TQueryKey,
   url: string,
   method: string,
   variables: TVariables,
-  options: TOptions | Record<string, unknown> = {},
+  options: TOptions | Record<string, unknown> = {}
 ) =>
   useQuery<TQueryFnData, TError, TData, TQueryKey>({
     ...options,
@@ -54,7 +54,7 @@ export const useHttpQuery = <
 export const httpRequest = <T, V>(
   method: string,
   url: string,
-  variables: V,
+  variables: V
 ): Promise<T> =>
   api({
     method,

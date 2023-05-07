@@ -67,7 +67,7 @@ export const CollapseButton: FC<CollapseButtonProps> = ({
         alignItems: 'center',
         justifyContent: 'center',
       }}
-      onClick={() => setExpend((prev) => !prev)}
+      onClick={() => setExpend(prev => !prev)}
       {...boxProps}
     >
       {!expend ? (
@@ -102,7 +102,7 @@ export const LinkStyled = styled(Link)(({ theme }) => ({
 }));
 
 export const SideBarStyled = styled(Box, {
-  shouldForwardProp: (props) => props !== 'expend',
+  shouldForwardProp: props => props !== 'expend',
 })<{
   expend?: boolean;
 }>(({ theme, expend = false }) => ({

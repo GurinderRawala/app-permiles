@@ -16,7 +16,7 @@ export const themeSlice = createSlice<
   reducers: {
     changeTheme: (
       state,
-      payload: { type?: string; payload: 'light' | 'dark' },
+      payload: { type?: string; payload: 'light' | 'dark' }
     ) => ({
       ...state,
       mode: payload.payload,

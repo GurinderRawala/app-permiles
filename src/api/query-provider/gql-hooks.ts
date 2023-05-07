@@ -7,10 +7,11 @@ import {
   UseQueryOptions,
 } from 'react-query';
 
-import type { RequestDocument } from 'graphql-request';
+import type { RequestDocument, Variables } from 'graphql-request';
 
 import { gqlClient } from '../graphql-client';
 import { API_HEADERS } from '../base-url';
+import { VariablesAndRequestHeadersArgs } from 'graphql-request/build/esm/types';
 
 export type UseGqlMutationOptions = Omit<UseMutationOptions, 'mutationFn'>;
 export type UseGqlQueryOptions = Omit<
@@ -23,14 +24,14 @@ export const useGqlMutation = <
   TError = unknown,
   TVariables = void,
   TContext = unknown,
-  TOptions = UseGqlMutationOptions,
+  TOptions = UseGqlMutationOptions
 >(
   mutationQuery: string | DocumentNode,
-  options: TOptions | Record<string, unknown> = {},
+  options: TOptions | Record<string, unknown> = {}
 ) =>
   useMutation<TData, TError, TVariables, TContext>({
     ...options,
-    mutationFn: (data) => gqlRequest(mutationQuery, data),
+    mutationFn: data => gqlRequest(mutationQuery, { input: data }),
   });
 
 export const useGqlQuery = <
@@ -38,13 +39,13 @@ export const useGqlQuery = <
   TError = GraphQLError,
   TData extends TQueryFnData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
-  TVariables = unknown,
-  TOptions = UseGqlQueryOptions,
+  TVariables extends Variables = Variables,
+  TOptions = UseGqlQueryOptions
 >(
   QUERY_KEY: TQueryKey,
   query: string | DocumentNode,
   variables: TVariables,
-  options: TOptions | Record<string, unknown> = {},
+  options: TOptions | Record<string, unknown> = {}
 ) =>
   useQuery<TQueryFnData, TError, TData, TQueryKey>({
     ...options,
@@ -52,10 +53,14 @@ export const useGqlQuery = <
     queryFn: async () => gqlRequest<TQueryFnData, TVariables>(query, variables),
   });
 
-export const gqlRequest = <T, V>(
+export const gqlRequest = <T, V extends Variables>(
   query: RequestDocument,
-  variables: V,
-): Promise<T> =>
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  gqlClient.request<T, V>(query, variables, API_HEADERS);
+  variables: V
+): Promise<T> => {
+  const variablesAndHeaders = [
+    variables,
+    API_HEADERS as Required<RequestInit>['headers'],
+  ] as unknown as VariablesAndRequestHeadersArgs<V>;
+
+  return gqlClient.request<T, V>(query, ...variablesAndHeaders);
+};

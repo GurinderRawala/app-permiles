@@ -22,9 +22,13 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     },
     components: {
       MuiCssBaseline: {
-        styleOverrides: `
-        @font-face: '"Titillium Web", sans-serif'
-        `,
+        styleOverrides: {
+          fontFamily: '"Titillium Web", sans-serif',
+          '& .MuiDataGrid-aggregationColumnHeader': {
+            backgroundColor: '#041c34',
+            color: '#fff',
+          },
+        },
       },
     },
   });

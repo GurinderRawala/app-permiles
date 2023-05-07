@@ -9,7 +9,7 @@ export interface LoadingOrErrorProps {
 }
 
 export const LoadingOrError: FC<LoadingOrErrorProps> = ({
-  message,
+  message = 'Something went wrong',
   isError = false,
   isLoading = true,
 }) => (

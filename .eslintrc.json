@@ -49,6 +49,8 @@
       2,
       { "namedComponents": "arrow-function" }
     ],
-    "react/jsx-no-useless-fragment": [2, { "allowExpressions": true }]
+    "react/jsx-no-useless-fragment": [2, { "allowExpressions": true }],
+    "prettier/prettier": ["error"],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx", ".ts"] }]
   }
 }
