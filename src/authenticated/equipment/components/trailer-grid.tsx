@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useTrailerQuery } from '../hooks';
+import { useLoginOnce, useTrailerQuery } from '../hooks';
 import { LoadingOrError } from '../../components/loading';
 import { Box } from '@mui/material';
 import { DataGrid } from '../../components/data-grid';
@@ -8,6 +8,7 @@ import { Trailer } from '../../../generated/graphql';
 import { FileDownload } from '../../components/file-download';
 
 export const TrailerGrid: FC = () => {
+  useLoginOnce();
   const { data, isError, isLoading } = useTrailerQuery();
 
   const columns: GridColDef<Trailer>[] = [
@@ -74,8 +75,8 @@ export const TrailerGrid: FC = () => {
     {
       field: 'notes',
       headerName: 'Notes',
-      width: 220,
       filterable: false,
+      minWidth: 200,
     },
   ];
 

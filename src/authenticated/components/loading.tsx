@@ -16,7 +16,6 @@ export const LoadingOrError: FC<LoadingOrErrorProps> = ({
   <LoadingWrapper>
     <SmallLogoImgStyled src={logo} />
     {isLoading && !isError ? <CircularProgress /> : message}
-    {isError && !isLoading && message}
   </LoadingWrapper>
 );
 
