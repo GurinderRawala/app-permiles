@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
-import { useLoginOnce, useTrailerQuery } from '../hooks';
+
 import { LoadingOrError } from '../../components/loading';
 import { DataGrid } from '../../components/data-grid';
 import { GridColDef } from '@mui/x-data-grid';
 import { Trailer } from '../../../generated/graphql';
 import { FileDownload } from '../../components/file-download';
 import { Box } from '@mui/material';
+import { useTrucksQuery } from '../hooks';
 
-export const TrailerGrid: FC = () => {
-  useLoginOnce();
-  const { data, isError, isLoading } = useTrailerQuery();
+export const TruckGrid: FC = () => {
+  const { data, isError, isLoading } = useTrucksQuery();
 
   const columns: GridColDef<Trailer>[] = [
     {
@@ -20,8 +20,8 @@ export const TrailerGrid: FC = () => {
         params.api.getRowIndexRelativeToVisibleRows(params.row.id) + 1,
     },
     {
-      field: 'trailerNo',
-      headerName: 'Trailer Number',
+      field: 'truckNo',
+      headerName: 'Truck Number',
       width: 150,
     },
     {
@@ -47,7 +47,7 @@ export const TrailerGrid: FC = () => {
     {
       field: 'licencePlate',
       headerName: 'License Plate',
-      width: 100,
+      width: 150,
     },
     {
       field: 'licenceState',
@@ -96,7 +96,7 @@ export const TrailerGrid: FC = () => {
       {data && (
         <Box sx={{ height: 700 }}>
           <DataGrid
-            rows={data.trailers || []}
+            rows={data.trucks || []}
             columns={columns}
             initialState={{
               columns: {

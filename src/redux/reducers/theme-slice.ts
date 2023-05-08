@@ -11,7 +11,7 @@ export const themeSlice = createSlice<
 >({
   name: 'themeSlice',
   initialState: {
-    mode: 'light',
+    mode: 'dark',
   },
   reducers: {
     changeTheme: (

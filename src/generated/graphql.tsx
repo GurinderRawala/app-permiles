@@ -17,7 +17,6 @@ export type Scalars = {
   Int: number;
   Float: number;
   /** A special custom Scalar type for Dates that converts to a ISO formatted string */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Date: any;
 };
 
@@ -638,6 +637,26 @@ export type UserAccountInput = {
   readonly username: InputMaybe<Scalars['String']>;
 };
 
+export type BrokersQueryVariables = Exact<{
+  where: InputMaybe<BrokerInput>;
+  orderBy: InputMaybe<Scalars['String']>;
+}>;
+
+export type BrokersQuery = {
+  readonly brokers: ReadonlyArray<{
+    readonly id: string;
+    readonly name: string;
+    readonly email: string;
+    readonly phone: string;
+    readonly contactname: string;
+    readonly streetaddress: string;
+    readonly city: string;
+    readonly province: string;
+    readonly postalcode: string;
+    readonly country: string;
+  } | null> | null;
+};
+
 export type TrailersQueryVariables = Exact<{
   where: InputMaybe<TrailerInput>;
   orderBy: InputMaybe<Scalars['String']>;
@@ -647,5 +666,36 @@ export type TrailersQuery = {
   readonly trailers: ReadonlyArray<{
     readonly id: string;
     readonly trailerNo: string;
+    readonly trailerAttributes: string;
+    readonly model: string;
+    readonly make: string;
+    readonly year: string;
+    readonly vinNumber: string | null;
+    readonly licencePlate: string;
+    readonly licenceState: string;
+    readonly safetyExpire: string;
+    readonly filepath: ReadonlyArray<string | null> | null;
+    readonly notes: string | null;
+  } | null> | null;
+};
+
+export type TrucksQueryVariables = Exact<{
+  where: InputMaybe<TruckInput>;
+  orderBy: InputMaybe<Scalars['String']>;
+}>;
+
+export type TrucksQuery = {
+  readonly trucks: ReadonlyArray<{
+    readonly id: string;
+    readonly model: string;
+    readonly make: string;
+    readonly year: string;
+    readonly truckNo: string;
+    readonly vinNumber: string | null;
+    readonly licencePlate: string;
+    readonly licenceState: string;
+    readonly safetyExpire: string;
+    readonly filepath: ReadonlyArray<string | null> | null;
+    readonly notes: string | null;
   } | null> | null;
 };

@@ -26,7 +26,13 @@ export const SideBar: FC<SideBarProps> = ({ upperLink, lowerLink }) => {
   return (
     <SideBarWrapper>
       <SideBarStyled expend={expend}>
-        <Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 3,
+          }}
+        >
           {upperLink.map(({ icon, to, href }, i) => (
             <LinkStyled key={i} href={href}>
               {icon}
@@ -81,13 +87,15 @@ export const CollapseButton: FC<CollapseButtonProps> = ({
 
 export const LinkStyled = styled(Link)(({ theme }) => ({
   display: 'flex',
-  justifyContent: 'center',
-  gap: 7,
+  justifyContent: 'flex-start',
+  gap: 8,
   alignItems: 'center',
   position: 'relative',
-  paddingBottom: 10,
+  paddingBottom: 8,
   color: theme.palette.grey[100],
   textDecoration: 'none',
+  fontSize: 'small',
+  fontWeight: '500',
 
   '&::after': {
     content: '""',
@@ -107,7 +115,7 @@ export const SideBarStyled = styled(Box, {
   expend?: boolean;
 }>(({ theme, expend = false }) => ({
   height: '100%',
-  backgroundColor: theme.palette.primary.main,
+  backgroundColor: theme.palette.secondary.main,
   color: theme.palette.grey[100],
   width: !expend ? 50 : 150,
   display: 'flex',
@@ -121,7 +129,7 @@ export const SideBarStyled = styled(Box, {
 
 export const SideBarWrapper = styled(Box)(({ theme }) => ({
   position: 'sticky',
-  top: 0,
+  top: 1,
   left: 0,
-  height: '100vh',
+  height: '99.9vh',
 }));

@@ -44,7 +44,7 @@ export const useGqlQuery = <
 >(
   QUERY_KEY: TQueryKey,
   query: string | DocumentNode,
-  variables: TVariables,
+  variables: TVariables = {} as TVariables,
   options: TOptions | Record<string, unknown> = {}
 ) =>
   useQuery<TQueryFnData, TError, TData, TQueryKey>({

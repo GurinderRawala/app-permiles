@@ -1,39 +1,37 @@
-import React, { FC, PropsWithChildren, useEffect } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import { SideBar } from '../components/side-bar';
 
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { NavigationLayoutStyled } from './styled';
+import { Box } from '@mui/material';
 
-export interface NavigationProviderProps {
-  pageTitle: string;
-}
-
-export const NavigationProvider: FC<
-  PropsWithChildren<NavigationProviderProps>
-> = ({ children, pageTitle }) => {
-  useEffect(() => {
-    document.title = `Per Miles | ${pageTitle}`;
-  }, []);
-
+export const NavigationProvider: FC<PropsWithChildren> = ({ children }) => {
   return (
     <NavigationLayoutStyled>
       <SideBar
         upperLink={[
           {
-            icon: <LocalShippingOutlinedIcon />,
+            icon: <LocalShippingOutlinedIcon fontSize="small" />,
             href: '/equipment',
             to: <>Equipment</>,
+          },
+          {
+            icon: <ReceiptOutlinedIcon fontSize="small" />,
+            href: '/broker',
+            to: <>Broker</>,
           },
         ]}
         lowerLink={[
           {
-            icon: <LocalShippingOutlinedIcon />,
+            icon: <SettingsOutlinedIcon fontSize="small" />,
             href: '/equipment',
-            to: <>Equipment</>,
+            to: <>Settings</>,
           },
         ]}
       />
-      {children}
+      <Box p={3}>{children}</Box>
     </NavigationLayoutStyled>
   );
 };

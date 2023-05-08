@@ -1,17 +1,15 @@
 import React, { FC, useEffect } from 'react';
-import { EQUIPMENTS_ROUTES } from './route.definitions';
-import { TrailerGrid } from './components/trailer-grid';
-import { TabPanel, TabView } from '../components/tab-utils';
-import { TruckGrid } from './components/truck-grid';
+import { BROKER_ROUTES } from './route.definitions';
 import { useTabChange } from '../hooks/tab-change';
+import { TabPanel, TabView } from '../components/tab-utils';
+import { BrokerGrid } from './components/broker-grid';
 
-export const EquipmentPage: FC = () => {
+export const BrokerPage: FC = () => {
   useEffect(() => {
-    document.title = `Per Miles | ${EQUIPMENTS_ROUTES.TITLE}`;
+    document.title = `Per Miles | ${BROKER_ROUTES.TITLE}`;
   }, []);
 
-  const tabList = ['trailers', 'trucks', 'add trailers', 'add trucks'];
-
+  const tabList = ['Broker List', 'Invoice Broker', 'Add Broker'];
   const { value, handleChange } = useTabChange(tabList);
 
   return (
@@ -25,10 +23,10 @@ export const EquipmentPage: FC = () => {
       }}
     >
       <TabPanel value={value} index={0}>
-        <TrailerGrid />
+        <BrokerGrid />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <TruckGrid />
+        Item two
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three

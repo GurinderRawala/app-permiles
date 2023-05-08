@@ -11,10 +11,10 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     palette: {
       mode,
       primary: {
-        main: '#041c34',
+        main: '#b1355c',
       },
       secondary: {
-        main: '#b1355c',
+        main: '#041c34',
       },
     },
     typography: {
@@ -24,10 +24,6 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
       MuiCssBaseline: {
         styleOverrides: {
           fontFamily: '"Titillium Web", sans-serif',
-          '& .MuiDataGrid-aggregationColumnHeader': {
-            backgroundColor: '#041c34',
-            color: '#fff',
-          },
         },
       },
     },
