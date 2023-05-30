@@ -1,6 +1,10 @@
 import { gql } from 'graphql-request';
-import { useGqlQuery, useHttpQuery } from '../../api';
-import { TrailersQuery, TrucksQuery } from '../../generated/graphql';
+import { useGqlMutation, useGqlQuery, useHttpQuery } from '../../api';
+import {
+  AddTrailerMutation,
+  TrailersQuery,
+  TrucksQuery,
+} from '../../generated/graphql';
 
 export const trailerGQL = gql`
   query trailers($where: trailerInput, $orderBy: String) {
@@ -50,9 +54,34 @@ export const useTrucksQuery = () => {
   return query;
 };
 
+export const trailerMutationGQL = gql`
+  mutation addTrailer($input: trailerInput) {
+    addTrailer(input: $input) {
+      id
+    }
+  }
+`;
+
+export const useAddTrailer = () => {
+  const { mutate, isError, isLoading } = useGqlMutation<AddTrailerMutation>(
+    trailerMutationGQL,
+    {
+      queryKey: 'addTrailer',
+    }
+  );
+
+  return {
+    addTrailer: mutate,
+    isError,
+    isLoading,
+  };
+};
+
 export const useLoginOnce = () => {
-  const query = useHttpQuery('loginQuery', 'api/user-accounts/signin', 'POST', {
+  const query = useHttpQuery('loginQuery', '/user-accounts/signin', 'POST', {
     email: 'gurinderrawala@gmail.com',
     password: 'Rawala',
   });
+
+  console.log(query.data);
 };

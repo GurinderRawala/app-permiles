@@ -31,7 +31,7 @@ export const useFileDownload = (downloadUrls: string[]) => {
       queryKey: ['file', key],
       queryFn: async () => {
         const response = await api.post(
-          '/api/get-file',
+          '/get-file',
           {
             filePath: key,
           },

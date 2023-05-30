@@ -4,8 +4,10 @@ import { TrailerGrid } from './components/trailer-grid';
 import { TabPanel, TabView } from '../components/tab-utils';
 import { TruckGrid } from './components/truck-grid';
 import { useTabChange } from '../hooks/tab-change';
+import { useLoginOnce } from './hooks';
 
 export const EquipmentPage: FC = () => {
+  //useLoginOnce();
   useEffect(() => {
     document.title = `Per Miles | ${EQUIPMENTS_ROUTES.TITLE}`;
   }, []);

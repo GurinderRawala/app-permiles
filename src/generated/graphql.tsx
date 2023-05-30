@@ -699,3 +699,11 @@ export type TrucksQuery = {
     readonly notes: string | null;
   } | null> | null;
 };
+
+export type AddTrailerMutationVariables = Exact<{
+  input: InputMaybe<TrailerInput>;
+}>;
+
+export type AddTrailerMutation = {
+  readonly addTrailer: { readonly id: string } | null;
+};
