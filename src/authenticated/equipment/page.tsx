@@ -1,10 +1,13 @@
 import React, { FC, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { EQUIPMENTS_ROUTES } from './route.definitions';
 import { TrailerGrid } from './components/trailer-grid';
 import { TabPanel, TabView } from '../components/tab-utils';
 import { TruckGrid } from './components/truck-grid';
 import { useTabChange } from '../hooks/tab-change';
 import { useLoginOnce } from './hooks';
+import { AddEquipment } from './components/forms';
+import { Trailer } from '../../generated/graphql';
 
 export const EquipmentPage: FC = () => {
   //useLoginOnce();
@@ -15,6 +18,19 @@ export const EquipmentPage: FC = () => {
   const tabList = ['trailers', 'trucks', 'add trailers', 'add trucks'];
 
   const { value, handleChange } = useTabChange(tabList);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Partial<Trailer>>({
+    mode: 'onSubmit',
+  });
+
+  const onSubmitTrailerForm = (data: Partial<Trailer>) => {
+    console.log({ data });
+  };
 
   return (
     <TabView
@@ -33,10 +49,22 @@ export const EquipmentPage: FC = () => {
         <TruckGrid />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <AddEquipment
+          {...{
+            register,
+            onSubmit: handleSubmit(onSubmitTrailerForm),
+            formType: 'trailer',
+          }}
+        />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item Four
+        <AddEquipment
+          {...{
+            register,
+            onSubmit: handleSubmit(onSubmitTrailerForm),
+            formType: 'truck',
+          }}
+        />
       </TabPanel>
     </TabView>
   );

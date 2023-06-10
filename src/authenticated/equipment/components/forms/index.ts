@@ -1,1 +1,1 @@
-export * from './add-trailer';
+export * from './add-quipment';
