@@ -27,7 +27,8 @@ export const useHttpMutation = <
 ) =>
   useMutation<TData, TError, TVariables, TContext>({
     ...options,
-    mutationFn: data => httpRequest<TData, TVariables>(url, method, data),
+    mutationFn: async data =>
+      (await httpRequest<TData, TVariables>(method, url, data)).data,
   });
 
 export const useHttpQuery = <
@@ -48,14 +49,15 @@ export const useHttpQuery = <
     ...options,
     queryKey: QUERY_KEY,
     queryFn: async () =>
-      await httpRequest<TQueryFnData, TVariables>(method, url, variables),
+      (await httpRequest<TQueryFnData, TVariables>(method, url, variables))
+        .data,
   });
 
 export const httpRequest = <T, V>(
   method: string,
   url: string,
   variables: V
-): Promise<T> =>
+): Promise<{ data: T }> =>
   api({
     method,
     url,

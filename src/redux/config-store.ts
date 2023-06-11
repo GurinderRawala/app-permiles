@@ -1,12 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { ThemeSliceState, themeReducer } from './reducers';
+import {
+  AlertSliceState,
+  ThemeSliceState,
+  alertReducer,
+  themeReducer,
+} from './reducers';
 
 export type Store = {
   themeReducer: ThemeSliceState;
+  alertReducer: AlertSliceState;
 };
 
 export const store = configureStore({
   reducer: {
     themeReducer,
+    alertReducer,
   },
 });

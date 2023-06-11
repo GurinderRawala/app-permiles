@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs, TabsProps } from '@mui/material';
+import { Box, Tab, Tabs, TabsProps, styled } from '@mui/material';
 import React, { FC, PropsWithChildren } from 'react';
 
 export interface TabViewProps {
@@ -13,14 +13,26 @@ export const TabView: FC<PropsWithChildren<TabViewProps>> = ({
 }) => {
   return (
     <>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: 2 }}>
+      <TabsWrapper>
         <Tabs {...tabsProps} aria-label="basic tabs example">
           {tabList.map((list, i) => (
             <Tab label={list} value={i} key={[list, i].join('-')} />
           ))}
         </Tabs>
-      </Box>
-      {children}
+      </TabsWrapper>
+      <Box p={3}>{children}</Box>
     </>
   );
 };
+
+export const TabsWrapper = styled(Box)(({ theme }) => ({
+  position: 'sticky',
+  top: 0,
+  left: 0,
+  zIndex: 100,
+  backgroundColor: theme.palette.background.paper,
+  height: 75,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-end',
+}));

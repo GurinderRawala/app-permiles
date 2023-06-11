@@ -707,3 +707,11 @@ export type AddTrailerMutationVariables = Exact<{
 export type AddTrailerMutation = {
   readonly addTrailer: { readonly id: string } | null;
 };
+
+export type AddTruckMutationVariables = Exact<{
+  input: InputMaybe<TruckInput>;
+}>;
+
+export type AddTruckMutation = {
+  readonly addTruck: { readonly id: string } | null;
+};

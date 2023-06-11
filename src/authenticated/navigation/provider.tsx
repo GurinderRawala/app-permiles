@@ -31,7 +31,7 @@ export const NavigationProvider: FC<PropsWithChildren> = ({ children }) => {
           },
         ]}
       />
-      <Box p={3}>{children}</Box>
+      <Box>{children}</Box>
     </NavigationLayoutStyled>
   );
 };

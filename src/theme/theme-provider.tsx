@@ -25,17 +25,17 @@ export const lightModePalette: Pick<Palette, 'background'> = {
 
 export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   const { mode } = useSelector((state: Store) => state.themeReducer);
-
   const theme = createTheme({
     palette: {
-      mode,
+      ...(mode === 'dark' && darkModePalette),
+      ...(mode === 'light' && lightModePalette),
+      mode: mode || 'dark',
       primary: {
         main: '#b1355c',
       },
       secondary: {
         main: '#041c34',
       },
-      ...(mode === 'dark' ? darkModePalette : lightModePalette),
     },
     typography: {
       fontFamily: '"Titillium Web", sans-serif',
@@ -50,6 +50,15 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
         styleOverrides: {
           root: {
             fontSize: 16,
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            maxWidth: 350,
+            minWidth: 100,
+            height: 45,
           },
         },
       },

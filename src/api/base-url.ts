@@ -1,7 +1,7 @@
 import axios from 'axios';
 export const API_SERVICE_URL = '/api';
 export const API_HEADERS = {
-  'Content-Type': 'application/json',
+  // 'Content-Type': '*/**',
 };
 
 export const api = axios.create({

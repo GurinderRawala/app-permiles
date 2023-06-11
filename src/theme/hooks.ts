@@ -7,23 +7,14 @@ export const useToggleTheme = () => {
 
   useEffect(() => {
     const storedMode = window.localStorage.getItem('mode');
-
-    dispatch(
-      changeTheme({
-        payload: storedMode,
-      })
-    );
+    dispatch(changeTheme(storedMode));
   }, []);
 
   const toggle = useCallback(
     (mode: 'light' | 'dark') => {
       window.localStorage.setItem('mode', mode);
 
-      dispatch(
-        changeTheme({
-          payload: mode,
-        })
-      );
+      dispatch(changeTheme(mode));
     },
     [dispatch]
   );
