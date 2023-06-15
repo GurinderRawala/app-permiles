@@ -1,45 +1,21 @@
-"""
-Exposes a URL that specifies the behaviour of this scalar.
-"""
-directive @specifiedBy(
-  """
-  The URL that specifies the behaviour of this scalar.
-  """
-  url: String!
-) on SCALAR
-
-"""
-Address information
-"""
+"""Address information"""
 input addressInput {
-  """
-  Unit number of bussiness or house number
-  """
+  """Unit number of bussiness or house number"""
   unitNumber: String!
 
-  """
-  Street name
-  """
+  """Street name"""
   streetName: String!
 
-  """
-  Name of the city
-  """
+  """Name of the city"""
   city: String!
 
-  """
-  Name of the state/province
-  """
+  """Name of the state/province"""
   state: String!
 
-  """
-  Name of the country
-  """
+  """Name of the country"""
   country: String
 
-  """
-  Postal code for the address important
-  """
+  """Postal code for the address important"""
   postalCode: String!
 }
 
@@ -112,7 +88,7 @@ input clientInput {
 }
 
 """
-A special custom Scalar type for Dates that converts to a ISO formatted string
+A special custom Scalar type for Dates that converts to a ISO formatted string 
 """
 scalar Date
 
@@ -198,209 +174,133 @@ input loadInput {
   updatedAt: Date
 }
 
-"""
-Load modified input information
-"""
+"""Load modified input information"""
 input loadModifiedInput {
-  """
-  The uuid of load, automatically generated if not provided
-  """
+  """The uuid of load, automatically generated if not provided"""
   id: ID
 
-  """
-  Load assigned to (driverId: uuid)
-  """
+  """Load assigned to (driverId: uuid)"""
   assignedTo: ID
 
-  """
-  Load brokerId (brokerId: uuid)
-  """
+  """Load brokerId (brokerId: uuid)"""
   brokerId: String
 
-  """
-  List of receivers (receiver: [string])
-  """
+  """List of receivers (receiver: [string])"""
   receiver: [receiverInput]!
 
-  """
-  List of shippers (shipper: [string])
-  """
+  """List of shippers (shipper: [string])"""
   shipper: [shipperInput]!
 
-  """
-  Commodity of the load (commodity: string)
-  """
+  """Commodity of the load (commodity: string)"""
   commodity: String
 
-  """
-  Is load is hazmat yes or no? (hazmat: boolean)
-  """
+  """Is load is hazmat yes or no? (hazmat: boolean)"""
   hazmat: Boolean!
 
-  """
-  Po number (poNumber: string)
-  """
+  """Po number (poNumber: string)"""
   poNumber: String!
 
-  """
-  Special instructions (specialInstructions: string)
-  """
+  """Special instructions (specialInstructions: string)"""
   specialInstructions: String
 
-  """
-  State (state: string), CREATED | ASSIGNED | MOVING | DELIVERED | PAID
-  """
+  """State (state: string), CREATED | ASSIGNED | MOVING | DELIVERED | PAID"""
   state: String!
 
-  """
-  Assigned Trailer number (trailerNo: string)
-  """
+  """Assigned Trailer number (trailerNo: string)"""
   trailerNo: String
 
-  """
-  Total weight (totalWeight: string)
-  """
+  """Total weight (totalWeight: string)"""
   totalWeight: String
 }
 
-"""
-Mutating data
-"""
+"""Mutating data"""
 type Mutation {
   addTrailer(
-    """
-    Trailer input values
-    """
-    input: trailerInput
+    """Trailer input values"""
+    input: trailerModifiedInput
   ): trailer
   addTruck(
-    """
-    Truck input values
-    """
-    input: truckInput
+    """Truck input values"""
+    input: truckModifiedInput
   ): truck
   addUserAccount(
-    """
-    UserAccount input values
-    """
+    """UserAccount input values"""
     input: userAccountInput
   ): userAccount
   addLoad(
-    """
-    Load input values
-    """
+    """Load input values"""
     input: loadModifiedInput
   ): load
   addBroker(
-    """
-    Broker input values
-    """
+    """Broker input values"""
     input: brokerInput
   ): broker
   addDriver(
-    """
-    Driver input values
-    """
+    """Driver input values"""
     input: driverInput
   ): driver
   addTrip(
-    """
-    Trip input values
-    """
+    """Trip input values"""
     input: TripModifiedInput
   ): trip
   addPayroll(
-    """
-    Payroll input values
-    """
+    """Payroll input values"""
     input: payrollInput
   ): payroll
   updateTrailer(
-    """
-    Trailer input values
-    """
+    """Trailer input values"""
     input: trailerInput
 
-    """
-    update where id match
-    """
+    """update where id match"""
     id: String
   ): trailer
   updateTruck(
-    """
-    Truck input values
-    """
+    """Truck input values"""
     input: truckInput
 
-    """
-    update where id match
-    """
+    """update where id match"""
     id: String
   ): truck
   updateUserAccount(
-    """
-    UserAccount input values
-    """
+    """UserAccount input values"""
     input: userAccountInput
 
-    """
-    update where id match
-    """
+    """update where id match"""
     id: String
   ): userAccount
   updateLoad(
-    """
-    Load input values
-    """
+    """Load input values"""
     input: loadInput
 
-    """
-    update where id match
-    """
+    """update where id match"""
     id: String
   ): load
   updateBroker(
-    """
-    Broker input values
-    """
+    """Broker input values"""
     input: brokerInput
 
-    """
-    update where id match
-    """
+    """update where id match"""
     id: String
   ): broker
   updateDriver(
-    """
-    Driver input values
-    """
+    """Driver input values"""
     input: driverInput
 
-    """
-    update where id match
-    """
+    """update where id match"""
     id: String
   ): driver
   updateTrip(
-    """
-    Trip input values
-    """
+    """Trip input values"""
     input: tripInput
 
-    """
-    update where id match
-    """
+    """update where id match"""
     id: String
   ): trip
   updatePayroll(
-    """
-    Payroll input values
-    """
+    """Payroll input values"""
     input: payrollInput
 
-    """
-    update where id match
-    """
+    """update where id match"""
     id: String
   ): payroll
   addClient(input: clientInput): client
@@ -452,198 +352,124 @@ input payrollInput {
   updatedAt: Date
 }
 
-"""
-Query data from graphql
-"""
+"""Query data from graphql"""
 type Query {
   trailers(
-    """
-    Find record using where expression
-    """
+    """Find record using where expression"""
     where: trailerInput
 
-    """
-    Field to order by
-    """
+    """Field to order by"""
     orderBy: String
   ): [trailer]
   trucks(
-    """
-    Find record using where expression
-    """
+    """Find record using where expression"""
     where: truckInput
 
-    """
-    Field to order by
-    """
+    """Field to order by"""
     orderBy: String
   ): [truck]
   userAccounts(
-    """
-    Find record using where expression
-    """
+    """Find record using where expression"""
     where: userAccountInput
 
-    """
-    Field to order by
-    """
+    """Field to order by"""
     orderBy: String
   ): [userAccount]
   loads(
-    """
-    Find record using where expression
-    """
+    """Find record using where expression"""
     where: loadInput
 
-    """
-    Field to order by
-    """
+    """Field to order by"""
     orderBy: String
   ): [load]
   brokers(
-    """
-    Find record using where expression
-    """
+    """Find record using where expression"""
     where: brokerInput
 
-    """
-    Field to order by
-    """
+    """Field to order by"""
     orderBy: String
   ): [broker]
   drivers(
-    """
-    Find record using where expression
-    """
+    """Find record using where expression"""
     where: driverInput
 
-    """
-    Field to order by
-    """
+    """Field to order by"""
     orderBy: String
   ): [driver]
   trips(
-    """
-    Find record using where expression
-    """
+    """Find record using where expression"""
     where: tripInput
 
-    """
-    Field to order by
-    """
+    """Field to order by"""
     orderBy: String
   ): [trip]
   payrolls(
-    """
-    Find record using where expression
-    """
+    """Find record using where expression"""
     where: payrollInput
 
-    """
-    Field to order by
-    """
+    """Field to order by"""
     orderBy: String
   ): [payroll]
   clients(
-    """
-    Find record using where expression
-    """
+    """Find record using where expression"""
     where: clientInput
 
-    """
-    Field to order by
-    """
+    """Field to order by"""
     orderBy: String
   ): [client]
 }
 
-"""
-Receiver information
-"""
+"""Receiver information"""
 input receiverInput {
-  """
-  StopID(uuid) for the receiver
-  """
+  """StopID(uuid) for the receiver"""
   stopID: ID!
 
-  """
-  The name of the receiver
-  """
+  """The name of the receiver"""
   receiverName: String!
 
-  """
-  Address of the receiver
-  """
+  """Address of the receiver"""
   address: addressInput!
 
-  """
-  Phone number of the receiver
-  """
+  """Phone number of the receiver"""
   phoneNumber: String
 
-  """
-  Email of the receiver
-  """
+  """Email of the receiver"""
   email: String
 
-  """
-  Arrival at the receiver
-  """
+  """Arrival at the receiver"""
   arrival: String
 
-  """
-  Depart at the receiver
-  """
+  """Depart at the receiver"""
   depart: String
 
-  """
-  Delivery appointment date and time
-  """
+  """Delivery appointment date and time"""
   deliveryAppointment: String
 }
 
-"""
-Shipper information
-"""
+"""Shipper information"""
 input shipperInput {
-  """
-  StopID(uuid) for the shipper
-  """
+  """StopID(uuid) for the shipper"""
   stopID: ID!
 
-  """
-  The name of the shipper
-  """
+  """The name of the shipper"""
   shipperName: String!
 
-  """
-  Address of the shipper
-  """
+  """Address of the shipper"""
   address: addressInput!
 
-  """
-  Phone number of the shipper
-  """
+  """Phone number of the shipper"""
   phoneNumber: String
 
-  """
-  Email of the shipper
-  """
+  """Email of the shipper"""
   email: String
 
-  """
-  Arrival at the shipper
-  """
+  """Arrival at the shipper"""
   arrival: String
 
-  """
-  Depart at the shipper
-  """
+  """Depart at the shipper"""
   depart: String
 
-  """
-  Pick up appointment date and time
-  """
+  """Pick up appointment date and time"""
   pickUpAppointment: String
 }
 
@@ -683,6 +509,42 @@ input trailerInput {
   updatedAt: Date
 }
 
+"""Trailer modified input information"""
+input trailerModifiedInput {
+  """The uuid of equipment, automatically generated if not provided"""
+  id: ID
+
+  """Model for equipment"""
+  model: String!
+
+  """Make of the equipment"""
+  make: String!
+
+  """Year of the equipment"""
+  year: String!
+
+  """VIN number of the equipment"""
+  vinNumber: String
+
+  """Licence plate of the equipment"""
+  licencePlate: String!
+
+  """Licence state of the equipment"""
+  licenceState: String!
+
+  """Safety expire date of equipment"""
+  safetyExpire: String!
+
+  """Any notes related to the equipment"""
+  notes: String
+
+  """Trailer number"""
+  trailerNo: String!
+
+  """Trailer attributes"""
+  trailerAttributes: String!
+}
+
 type trip {
   id: String!
   tripId: Int!
@@ -697,13 +559,9 @@ type trip {
   updatedAt: Date!
 }
 
-"""
-Trip information
-"""
+"""Trip information"""
 input TripInfoInput {
-  """
-  The id of the load included in the trip
-  """
+  """The id of the load included in the trip"""
   id: ID!
 }
 
@@ -721,33 +579,21 @@ input tripInput {
   updatedAt: Date
 }
 
-"""
-Trip input fields
-"""
+"""Trip input fields"""
 input TripModifiedInput {
-  """
-  The ID of the trip, automatically generated
-  """
+  """The ID of the trip, automatically generated"""
   id: ID
 
-  """
-  The driver ID of the assigned driver
-  """
+  """The driver ID of the assigned driver"""
   assignedTo: ID!
 
-  """
-  The trip information
-  """
+  """The trip information"""
   tripInfo: [TripInfoInput]!
 
-  """
-  State (state: string), CREATED | ASSIGNED | MOVING | DELIVERED | PAID
-  """
+  """State (state: string), CREATED | ASSIGNED | MOVING | DELIVERED | PAID"""
   state: String!
 
-  """
-  Total miles of the trip
-  """
+  """Total miles of the trip"""
   totalMiles: Float
 }
 
@@ -783,6 +629,39 @@ input truckInput {
   notes: String
   createdAt: Date
   updatedAt: Date
+}
+
+"""Truck modified input information"""
+input truckModifiedInput {
+  """The uuid of equipment, automatically generated if not provided"""
+  id: ID
+
+  """Model for equipment"""
+  model: String!
+
+  """Make of the equipment"""
+  make: String!
+
+  """Year of the equipment"""
+  year: String!
+
+  """VIN number of the equipment"""
+  vinNumber: String
+
+  """Licence plate of the equipment"""
+  licencePlate: String!
+
+  """Licence state of the equipment"""
+  licenceState: String!
+
+  """Safety expire date of equipment"""
+  safetyExpire: String!
+
+  """Any notes related to the equipment"""
+  notes: String
+
+  """Truck number"""
+  truckNo: String!
 }
 
 type userAccount {
@@ -822,3 +701,4 @@ input userAccountInput {
   clientid: String
   token: String
 }
+

@@ -67,7 +67,7 @@ export const useTrucksQuery = () => {
 };
 
 export const trailerMutationGQL = gql`
-  mutation addTrailer($input: trailerInput) {
+  mutation addTrailer($input: trailerModifiedInput) {
     addTrailer(input: $input) {
       id
     }
@@ -99,7 +99,7 @@ export const useAddTrailer: UseAddTrailer = () => {
 };
 
 export const truckMutationGQL = gql`
-  mutation addTruck($input: truckInput) {
+  mutation addTruck($input: truckModifiedInput) {
     addTruck(input: $input) {
       id
     }

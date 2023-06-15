@@ -16,7 +16,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** A special custom Scalar type for Dates that converts to a ISO formatted string */
+  /** A special custom Scalar type for Dates that converts to a ISO formatted string  */
   Date: any;
 };
 
@@ -68,7 +68,7 @@ export type MutationAddPayrollArgs = {
 
 /** Mutating data */
 export type MutationAddTrailerArgs = {
-  input: InputMaybe<TrailerInput>;
+  input: InputMaybe<TrailerModifiedInput>;
 };
 
 /** Mutating data */
@@ -78,7 +78,7 @@ export type MutationAddTripArgs = {
 
 /** Mutating data */
 export type MutationAddTruckArgs = {
-  input: InputMaybe<TruckInput>;
+  input: InputMaybe<TruckModifiedInput>;
 };
 
 /** Mutating data */
@@ -537,6 +537,32 @@ export type TrailerInput = {
   readonly year: InputMaybe<Scalars['String']>;
 };
 
+/** Trailer modified input information */
+export type TrailerModifiedInput = {
+  /** The uuid of equipment, automatically generated if not provided */
+  readonly id: InputMaybe<Scalars['ID']>;
+  /** Licence plate of the equipment */
+  readonly licencePlate: Scalars['String'];
+  /** Licence state of the equipment */
+  readonly licenceState: Scalars['String'];
+  /** Make of the equipment */
+  readonly make: Scalars['String'];
+  /** Model for equipment */
+  readonly model: Scalars['String'];
+  /** Any notes related to the equipment */
+  readonly notes: InputMaybe<Scalars['String']>;
+  /** Safety expire date of equipment */
+  readonly safetyExpire: Scalars['String'];
+  /** Trailer attributes */
+  readonly trailerAttributes: Scalars['String'];
+  /** Trailer number */
+  readonly trailerNo: Scalars['String'];
+  /** VIN number of the equipment */
+  readonly vinNumber: InputMaybe<Scalars['String']>;
+  /** Year of the equipment */
+  readonly year: Scalars['String'];
+};
+
 export type Trip = {
   readonly assignedTo: Scalars['String'];
   readonly bol: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
@@ -597,6 +623,30 @@ export type TruckInput = {
   readonly updatedAt: InputMaybe<Scalars['Date']>;
   readonly vinNumber: InputMaybe<Scalars['String']>;
   readonly year: InputMaybe<Scalars['String']>;
+};
+
+/** Truck modified input information */
+export type TruckModifiedInput = {
+  /** The uuid of equipment, automatically generated if not provided */
+  readonly id: InputMaybe<Scalars['ID']>;
+  /** Licence plate of the equipment */
+  readonly licencePlate: Scalars['String'];
+  /** Licence state of the equipment */
+  readonly licenceState: Scalars['String'];
+  /** Make of the equipment */
+  readonly make: Scalars['String'];
+  /** Model for equipment */
+  readonly model: Scalars['String'];
+  /** Any notes related to the equipment */
+  readonly notes: InputMaybe<Scalars['String']>;
+  /** Safety expire date of equipment */
+  readonly safetyExpire: Scalars['String'];
+  /** Truck number */
+  readonly truckNo: Scalars['String'];
+  /** VIN number of the equipment */
+  readonly vinNumber: InputMaybe<Scalars['String']>;
+  /** Year of the equipment */
+  readonly year: Scalars['String'];
 };
 
 export type UserAccount = {
@@ -701,7 +751,7 @@ export type TrucksQuery = {
 };
 
 export type AddTrailerMutationVariables = Exact<{
-  input: InputMaybe<TrailerInput>;
+  input: InputMaybe<TrailerModifiedInput>;
 }>;
 
 export type AddTrailerMutation = {
@@ -709,7 +759,7 @@ export type AddTrailerMutation = {
 };
 
 export type AddTruckMutationVariables = Exact<{
-  input: InputMaybe<TruckInput>;
+  input: InputMaybe<TruckModifiedInput>;
 }>;
 
 export type AddTruckMutation = {

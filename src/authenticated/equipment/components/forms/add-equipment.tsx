@@ -76,9 +76,7 @@ export const AddEquipment: FC<AddEquipmentProps> = ({
         />
         <TextField
           {...commonCssForInput}
-          {...register('vinNumber', {
-            required: true,
-          })}
+          {...register('vinNumber')}
           label="VIN#"
           placeholder="VIN#"
         />
