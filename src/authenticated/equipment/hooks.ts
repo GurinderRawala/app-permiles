@@ -2,11 +2,18 @@ import { gql } from 'graphql-request';
 import { useGqlMutation, useGqlQuery, useHttpQuery } from '../../api';
 import {
   AddTrailerMutation,
+  AddTrailerMutationVariables,
   AddTruckMutation,
-  TrailerInput,
+  AddTruckMutationVariables,
+  InputMaybe,
+  TrailerModifiedInput,
   TrailersQuery,
-  TruckInput,
+  TruckModifiedInput,
   TrucksQuery,
+  UpdateTrailerMutation,
+  UpdateTrailerMutationVariables,
+  UpdateTruckMutation,
+  UpdateTruckMutationVariables,
 } from '../../generated/graphql';
 import { UseMutateFunction } from 'react-query';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
@@ -75,7 +82,11 @@ export const trailerMutationGQL = gql`
 `;
 
 export declare type UseAddTrailer = () => {
-  mutate: UseMutateFunction<AddTrailerMutation, unknown, TrailerInput>;
+  mutate: UseMutateFunction<
+    AddTrailerMutation,
+    unknown,
+    AddTrailerMutationVariables
+  >;
   isError: boolean;
   isLoading: boolean;
   data?: AddTrailerMutation;
@@ -85,7 +96,7 @@ export const useAddTrailer: UseAddTrailer = () => {
   const { mutate, isError, isLoading, data } = useGqlMutation<
     AddTrailerMutation,
     unknown,
-    TrailerInput
+    AddTrailerMutationVariables
   >(trailerMutationGQL, {
     queryKey: 'addTrailer',
   });
@@ -107,7 +118,11 @@ export const truckMutationGQL = gql`
 `;
 
 export declare type UseAddTruck = () => {
-  mutate: UseMutateFunction<AddTruckMutation, unknown, TruckInput>;
+  mutate: UseMutateFunction<
+    AddTruckMutation,
+    unknown,
+    AddTruckMutationVariables
+  >;
   isError: boolean;
   isLoading: boolean;
   data?: AddTruckMutation;
@@ -117,7 +132,7 @@ export const useAddTruck: UseAddTruck = () => {
   const { mutate, isError, isLoading, data } = useGqlMutation<
     AddTruckMutation,
     unknown,
-    TruckInput
+    AddTruckMutationVariables
   >(truckMutationGQL, {
     queryKey: 'addTruck',
   });
@@ -130,21 +145,141 @@ export const useAddTruck: UseAddTruck = () => {
   };
 };
 
-export const useEquipmentForm = <T extends UseAddTrailer | UseAddTruck>(
-  useAddEquipmentHook: T,
+export const updateTrailerGQL = gql`
+  mutation updateTrailer($input: trailerModifiedInput, $id: String) {
+    updateTrailer(input: $input, id: $id) {
+      id
+      trailerNo
+    }
+  }
+`;
+
+export declare type UseUpdateTrailer = () => {
+  mutate: UseMutateFunction<
+    UpdateTrailerMutation,
+    unknown,
+    UpdateTrailerMutationVariables
+  >;
+  isError: boolean;
+  isLoading: boolean;
+  data?: UpdateTrailerMutation;
+};
+
+export const useUpdateTrailer: UseUpdateTrailer = () => {
+  const { mutate, isError, isLoading, data } = useGqlMutation<
+    UpdateTrailerMutation,
+    unknown,
+    UpdateTrailerMutationVariables
+  >(updateTrailerGQL, {
+    queryKey: 'updateTrailer',
+  });
+
+  return {
+    mutate,
+    isError,
+    isLoading,
+    data,
+  };
+};
+
+export const updateTruckGQL = gql`
+  mutation updateTruck($input: truckModifiedInput, $id: String) {
+    updateTruck(input: $input, id: $id) {
+      id
+      truckNo
+    }
+  }
+`;
+
+export declare type UseUpdateTruck = () => {
+  mutate: UseMutateFunction<
+    UpdateTruckMutation,
+    unknown,
+    UpdateTruckMutationVariables
+  >;
+  isError: boolean;
+  isLoading: boolean;
+  data?: UpdateTruckMutation;
+};
+
+export const useUpdateTruck: UseUpdateTruck = () => {
+  const { mutate, isError, isLoading, data } = useGqlMutation<
+    UpdateTruckMutation,
+    unknown,
+    UpdateTruckMutationVariables
+  >(updateTruckGQL, {
+    queryKey: 'updateTruck',
+  });
+
+  return {
+    mutate,
+    isError,
+    isLoading,
+    data,
+  };
+};
+
+export type EquipmentFormHookName =
+  | 'addTrailer'
+  | 'addTruck'
+  | 'updateTrailer'
+  | 'updateTruck';
+
+export type EquipmentInputDataName = 'trailerInput' | 'truckInput';
+
+export declare type UseAddEditEquipmentHook<T extends EquipmentFormHookName> =
+  T extends 'addTrailer'
+    ? UseAddTrailer
+    : T extends 'addTruck'
+    ? UseAddTruck
+    : T extends 'updateTrailer'
+    ? UseUpdateTrailer
+    : T extends 'updateTruck'
+    ? UseUpdateTruck
+    : never;
+
+export declare type EquipmentMutationVariables<
+  T extends EquipmentFormHookName
+> = T extends 'addTrailer'
+  ? AddTrailerMutationVariables
+  : T extends 'addTruck'
+  ? AddTruckMutationVariables
+  : T extends 'updateTrailer'
+  ? UpdateTrailerMutationVariables
+  : T extends 'updateTruck'
+  ? UpdateTruckMutationVariables
+  : never;
+
+export type EquipmentFormSubmittedData<
+  T extends 'trailerInput' | 'truckInput'
+> = T extends 'trailerInput'
+  ? InputMaybe<TrailerModifiedInput> & { files: FileList }
+  : InputMaybe<TruckModifiedInput> & { files: FileList };
+
+export type CreateEquipmentMutationVariables<
+  T extends EquipmentFormHookName,
+  D extends 'trailerInput' | 'truckInput'
+> = (data: EquipmentFormSubmittedData<D>) => EquipmentMutationVariables<T>;
+
+export const useEquipmentForm = <
+  T extends EquipmentFormHookName,
+  D extends EquipmentInputDataName
+>(
+  useAddEquipmentHook: UseAddEditEquipmentHook<T>,
   repoKey: string,
   fieldToUpdate: string,
   callback: (
     res: AddTrailerMutation | AddTruckMutation | UploadResponse[] | null,
     err?: unknown
-  ) => void
+  ) => void,
+  createEquipmentMutationVariables: CreateEquipmentMutationVariables<T, D>
 ) => {
   const {
     register,
     handleSubmit,
     formState: { errors: formErrors },
     reset,
-  } = useForm({
+  } = useForm<EquipmentFormSubmittedData<D>>({
     mode: 'onSubmit',
   });
   const {
@@ -179,26 +314,29 @@ export const useEquipmentForm = <T extends UseAddTrailer | UseAddTruck>(
 
   const [fileList, setFileList] = useState<FileList | null>(null);
 
-  const onSubmit: SubmitHandler<FieldValues> = useCallback(data => {
-    console.log({ data });
-    if (data?.files) {
-      setFileList(data?.files);
-    }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    mutate(omit(data, 'files'), {
-      onError: (err: unknown) => {
-        console.error({ err }, 'Error submitting form');
-        callback(null, err);
-      },
-      onSuccess: (res: AddTrailerMutation | AddTruckMutation) => {
-        callback(res);
-        if (!data?.files) {
-          reset();
-        }
-      },
-    });
-  }, []);
+  const onSubmit: SubmitHandler<EquipmentFormSubmittedData<D>> = useCallback(
+    data => {
+      console.log({ data });
+      if (data?.files) {
+        setFileList(data?.files);
+      }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      mutate(createEquipmentMutationVariables(data), {
+        onError: (err: unknown) => {
+          console.error({ err }, 'Error submitting form');
+          callback(null, err);
+        },
+        onSuccess: (res: AddTrailerMutation | AddTruckMutation) => {
+          callback(res);
+          if (!data?.files) {
+            reset();
+          }
+        },
+      });
+    },
+    []
+  );
 
   useEffect(() => {
     if (!recordId.length || !fileList?.length) return;

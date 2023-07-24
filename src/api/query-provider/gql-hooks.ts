@@ -22,7 +22,7 @@ export type UseGqlQueryOptions = Omit<
 export const useGqlMutation = <
   TData = unknown,
   TError = unknown,
-  TVariables = void,
+  TVariables extends Variables = Variables,
   TContext = unknown,
   TOptions = UseGqlMutationOptions
 >(
@@ -31,7 +31,7 @@ export const useGqlMutation = <
 ) =>
   useMutation<TData, TError, TVariables, TContext>({
     ...options,
-    mutationFn: data => gqlRequest(mutationQuery, { input: data }),
+    mutationFn: data => gqlRequest(mutationQuery, { ...data }),
   });
 
 export const useGqlQuery = <

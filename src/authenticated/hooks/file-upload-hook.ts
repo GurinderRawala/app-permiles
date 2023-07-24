@@ -1,5 +1,5 @@
 import { UseMutateFunction } from 'react-query';
-import { api, useHttpMutation } from '../../api';
+import { useHttpMutation } from '../../api';
 
 export declare type FileUploadParams = {
   recordId: string; // uuid of the record where updating filepath

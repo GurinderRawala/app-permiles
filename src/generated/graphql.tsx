@@ -17,6 +17,7 @@ export type Scalars = {
   Int: number;
   Float: number;
   /** A special custom Scalar type for Dates that converts to a ISO formatted string  */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Date: any;
 };
 
@@ -101,7 +102,7 @@ export type MutationUpdateDriverArgs = {
 /** Mutating data */
 export type MutationUpdateLoadArgs = {
   id: InputMaybe<Scalars['String']>;
-  input: InputMaybe<LoadInput>;
+  input: InputMaybe<LoadModifiedInput>;
 };
 
 /** Mutating data */
@@ -113,19 +114,19 @@ export type MutationUpdatePayrollArgs = {
 /** Mutating data */
 export type MutationUpdateTrailerArgs = {
   id: InputMaybe<Scalars['String']>;
-  input: InputMaybe<TrailerInput>;
+  input: InputMaybe<TrailerModifiedInput>;
 };
 
 /** Mutating data */
 export type MutationUpdateTripArgs = {
   id: InputMaybe<Scalars['String']>;
-  input: InputMaybe<TripInput>;
+  input: InputMaybe<TripModifiedInput>;
 };
 
 /** Mutating data */
 export type MutationUpdateTruckArgs = {
   id: InputMaybe<Scalars['String']>;
-  input: InputMaybe<TruckInput>;
+  input: InputMaybe<TruckModifiedInput>;
 };
 
 /** Mutating data */
@@ -764,4 +765,28 @@ export type AddTruckMutationVariables = Exact<{
 
 export type AddTruckMutation = {
   readonly addTruck: { readonly id: string } | null;
+};
+
+export type UpdateTrailerMutationVariables = Exact<{
+  input: InputMaybe<TrailerModifiedInput>;
+  id: InputMaybe<Scalars['String']>;
+}>;
+
+export type UpdateTrailerMutation = {
+  readonly updateTrailer: {
+    readonly id: string;
+    readonly trailerNo: string;
+  } | null;
+};
+
+export type UpdateTruckMutationVariables = Exact<{
+  input: InputMaybe<TruckModifiedInput>;
+  id: InputMaybe<Scalars['String']>;
+}>;
+
+export type UpdateTruckMutation = {
+  readonly updateTruck: {
+    readonly id: string;
+    readonly truckNo: string;
+  } | null;
 };

@@ -249,14 +249,14 @@ type Mutation {
   ): payroll
   updateTrailer(
     """Trailer input values"""
-    input: trailerInput
+    input: trailerModifiedInput
 
     """update where id match"""
     id: String
   ): trailer
   updateTruck(
     """Truck input values"""
-    input: truckInput
+    input: truckModifiedInput
 
     """update where id match"""
     id: String
@@ -270,7 +270,7 @@ type Mutation {
   ): userAccount
   updateLoad(
     """Load input values"""
-    input: loadInput
+    input: loadModifiedInput
 
     """update where id match"""
     id: String
@@ -291,7 +291,7 @@ type Mutation {
   ): driver
   updateTrip(
     """Trip input values"""
-    input: tripInput
+    input: TripModifiedInput
 
     """update where id match"""
     id: String

@@ -15,6 +15,8 @@ import { AddEquipment } from './components/forms';
 import { useAlert } from '../../shared';
 import { AddTrailerMutation, AddTruckMutation } from '../../generated/graphql';
 import { UploadResponse } from '../hooks/file-upload-hook';
+import { omit } from 'lodash';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 
 const TRAILER_REPO = 'trailerRepo';
 const TRUCK_REPO = 'truckRepo';
@@ -55,11 +57,12 @@ export const EquipmentPage: FC = () => {
     isLoading: isTrailerLoading,
     onSubmit: onTrailerSubmit,
     formErrors: trailerFormErrors,
-  } = useEquipmentForm<UseAddTrailer>(
+  } = useEquipmentForm<'addTrailer', 'trailerInput'>(
     useAddTrailer,
     TRAILER_REPO,
     'filepath',
-    formCallback
+    formCallback,
+    data => ({ input: omit(data, 'files') })
   );
 
   const {
@@ -69,11 +72,12 @@ export const EquipmentPage: FC = () => {
     isLoading: isTruckLoading,
     onSubmit: onTruckSubmit,
     formErrors: truckFormErrors,
-  } = useEquipmentForm<UseAddTruck>(
+  } = useEquipmentForm<'addTruck', 'truckInput'>(
     useAddTruck,
     TRUCK_REPO,
     'filepath',
-    formCallback
+    formCallback,
+    data => ({ input: omit(data, 'files') })
   );
 
   return (
@@ -95,7 +99,8 @@ export const EquipmentPage: FC = () => {
       <TabPanel value={value} index={2}>
         <AddEquipment
           {...{
-            register: registerTrailer,
+            register:
+              registerTrailer as unknown as UseFormRegister<FieldValues>,
             onSubmit: handleSubmitTrailer(onTrailerSubmit),
             formType: 'trailer',
             errors: trailerFormErrors,
@@ -107,7 +112,7 @@ export const EquipmentPage: FC = () => {
       <TabPanel value={value} index={3}>
         <AddEquipment
           {...{
-            register: registerTruck,
+            register: registerTruck as unknown as UseFormRegister<FieldValues>,
             onSubmit: handleSubmitTruck(onTruckSubmit),
             formType: 'truck',
             errors: truckFormErrors,

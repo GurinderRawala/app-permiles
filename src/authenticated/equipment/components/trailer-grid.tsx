@@ -43,6 +43,7 @@ export const TrailerGrid: FC = () => {
       field: 'vinNumber',
       headerName: 'VIN#',
       width: 200,
+      valueGetter: ({ row }) => row.vinNumber || '-',
     },
     {
       field: 'licencePlate',
@@ -67,7 +68,7 @@ export const TrailerGrid: FC = () => {
       renderCell: ({ row }) => {
         const { filepath } = row;
 
-        if (!filepath?.length) return null;
+        if (!filepath?.length) return '-';
 
         return <FileDownload downloadUrls={filepath as string[]} />;
       },
@@ -77,6 +78,7 @@ export const TrailerGrid: FC = () => {
       headerName: 'Notes',
       filterable: false,
       width: 350,
+      valueGetter: ({ row }) => row.notes || '-',
     },
   ];
 
