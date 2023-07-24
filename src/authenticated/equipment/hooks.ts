@@ -16,8 +16,7 @@ import {
   UpdateTruckMutationVariables,
 } from '../../generated/graphql';
 import { UseMutateFunction } from 'react-query';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { omit } from 'lodash';
+import { DeepPartial, SubmitHandler, useForm } from 'react-hook-form';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   UploadResponse,
@@ -272,7 +271,8 @@ export const useEquipmentForm = <
     res: AddTrailerMutation | AddTruckMutation | UploadResponse[] | null,
     err?: unknown
   ) => void,
-  createEquipmentMutationVariables: CreateEquipmentMutationVariables<T, D>
+  createEquipmentMutationVariables: CreateEquipmentMutationVariables<T, D>,
+  defaultValues?: DeepPartial<EquipmentFormSubmittedData<D>>
 ) => {
   const {
     register,
@@ -281,6 +281,7 @@ export const useEquipmentForm = <
     reset,
   } = useForm<EquipmentFormSubmittedData<D>>({
     mode: 'onSubmit',
+    defaultValues: defaultValues ? defaultValues : undefined,
   });
   const {
     data: submitResponse,
