@@ -278,11 +278,14 @@ export const useEquipmentForm = <
     register,
     handleSubmit,
     formState: { errors: formErrors },
+    watch,
     reset,
+    control,
   } = useForm<EquipmentFormSubmittedData<D>>({
     mode: 'onSubmit',
     defaultValues: defaultValues ? defaultValues : undefined,
   });
+
   const {
     data: submitResponse,
     mutate,
@@ -317,7 +320,6 @@ export const useEquipmentForm = <
 
   const onSubmit: SubmitHandler<EquipmentFormSubmittedData<D>> = useCallback(
     data => {
-      console.log({ data });
       if (data?.files) {
         setFileList(data?.files);
       }
@@ -330,7 +332,8 @@ export const useEquipmentForm = <
         },
         onSuccess: (res: AddTrailerMutation | AddTruckMutation) => {
           callback(res);
-          if (!data?.files) {
+          if (!data?.files?.length) {
+            console.log('reset fields');
             reset();
           }
         },
@@ -364,16 +367,18 @@ export const useEquipmentForm = <
     formErrors,
     handleSubmit,
     register,
+    watch,
     isFileUploadError,
     isFileUploadLoading,
+    control,
   };
 };
 
 export const useLoginOnce = () => {
-  const query = useHttpQuery('loginQuery', '/user-accounts/signin', 'POST', {
+  useHttpQuery('loginQuery', '/user-accounts/signin', 'POST', {
     email: 'gurinderrawala@gmail.com',
     password: 'Rawala',
   });
 
-  console.log(query.data);
+  // console.log(query.data);
 };

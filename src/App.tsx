@@ -6,17 +6,21 @@ import { PMQueryProvider } from './api';
 import { RouteProvider } from './router';
 import { NavigationProvider } from './authenticated/navigation';
 import { AlertProvider } from './shared';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 export const App: FC = () => {
   return (
     <ReduxProvider store={store}>
       <PMQueryProvider>
         <ThemeProvider>
-          <AlertProvider />
-          {/* These are authenticated routes */}
-          <NavigationProvider>
-            <RouteProvider />
-          </NavigationProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <AlertProvider />
+            {/* These are authenticated routes */}
+            <NavigationProvider>
+              <RouteProvider />
+            </NavigationProvider>
+          </LocalizationProvider>
         </ThemeProvider>
       </PMQueryProvider>
     </ReduxProvider>

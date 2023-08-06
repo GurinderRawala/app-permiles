@@ -4,13 +4,7 @@ import { TrailerGrid } from './components/trailer-grid';
 import { TabPanel, TabView } from '../components/tab-utils';
 import { TruckGrid } from './components/truck-grid';
 import { useTabChange } from '../hooks/tab-change';
-import {
-  UseAddTrailer,
-  UseAddTruck,
-  useAddTrailer,
-  useAddTruck,
-  useEquipmentForm,
-} from './hooks';
+import { useAddTrailer, useAddTruck, useEquipmentForm } from './hooks';
 import { AddEquipment } from './components/forms';
 import { useAlert } from '../../shared';
 import { AddTrailerMutation, AddTruckMutation } from '../../generated/graphql';
@@ -53,10 +47,10 @@ export const EquipmentPage: FC = () => {
   const {
     register: registerTrailer,
     handleSubmit: handleSubmitTrailer,
-    isError: isTrailerError,
     isLoading: isTrailerLoading,
     onSubmit: onTrailerSubmit,
     formErrors: trailerFormErrors,
+    control: addTrailerControl,
   } = useEquipmentForm<'addTrailer', 'trailerInput'>(
     useAddTrailer,
     TRAILER_REPO,
@@ -68,10 +62,10 @@ export const EquipmentPage: FC = () => {
   const {
     register: registerTruck,
     handleSubmit: handleSubmitTruck,
-    isError: isTruckError,
     isLoading: isTruckLoading,
     onSubmit: onTruckSubmit,
     formErrors: truckFormErrors,
+    control: addTruckControl,
   } = useEquipmentForm<'addTruck', 'truckInput'>(
     useAddTruck,
     TRUCK_REPO,
@@ -105,7 +99,7 @@ export const EquipmentPage: FC = () => {
             formType: 'trailer',
             errors: trailerFormErrors,
             isLoading: isTrailerLoading,
-            isError: isTrailerError,
+            formControl: addTrailerControl,
           }}
         />
       </TabPanel>
@@ -117,7 +111,7 @@ export const EquipmentPage: FC = () => {
             formType: 'truck',
             errors: truckFormErrors,
             isLoading: isTruckLoading,
-            isError: isTruckError,
+            formControl: addTruckControl,
           }}
         />
       </TabPanel>

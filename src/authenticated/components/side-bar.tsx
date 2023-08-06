@@ -127,7 +127,7 @@ export const SideBarStyled = styled(Box, {
   borderRadius: '0px 5px 5px 0',
 }));
 
-export const SideBarWrapper = styled(Box)(({ theme }) => ({
+export const SideBarWrapper = styled(Box)(() => ({
   position: 'sticky',
   top: 1,
   left: 0,

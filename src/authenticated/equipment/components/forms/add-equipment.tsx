@@ -1,33 +1,37 @@
 import {
-  Box,
   Button,
-  Input,
+  Stack,
   TextField,
   TextFieldProps,
   Typography,
-  styled,
 } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
-import React, { CSSProperties, FC, FormEventHandler } from 'react';
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
-import { AppDatePicker, AppDatePickerProps } from '../../../../shared';
+import React, { FC, FormEventHandler } from 'react';
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  FieldValues,
+  UseFormRegister,
+} from 'react-hook-form';
 import { format } from 'date-fns';
+import { DatePicker } from '@mui/x-date-pickers';
 
 export interface AddEquipmentProps {
   register: UseFormRegister<FieldValues>;
   onSubmit: FormEventHandler<HTMLFormElement>;
   isLoading: boolean;
-  isError: boolean;
   errors: FieldErrors;
   formType: 'trailer' | 'truck';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formControl: Control<any, any>;
 }
 export const AddEquipment: FC<AddEquipmentProps> = ({
   register,
   onSubmit,
   errors,
   isLoading,
-  isError,
   formType,
+  formControl,
 }) => {
   const commonCssForInput: TextFieldProps = {
     sx: {
@@ -36,121 +40,151 @@ export const AddEquipment: FC<AddEquipmentProps> = ({
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <Stack component="form" onSubmit={onSubmit} py={2} gap={2}>
       <Typography variant="h4" pb={2}>
         {formType === 'trailer' ? 'Add Trailer' : 'Add Truck'}
       </Typography>
-      <AddTrailerFormWrapper>
-        <TextField
-          {...commonCssForInput}
-          {...register(formType === 'trailer' ? 'trailerNo' : 'truckNo', {
-            required: true,
-          })}
-          label={formType === 'trailer' ? 'TrailerNo' : 'TruckNo'}
-          placeholder={formType === 'trailer' ? 'TrailerNo' : 'TruckNo'}
-          error={!!errors.trailerNo}
-        />
-        <TextField
-          {...commonCssForInput}
-          {...register('model', {
-            required: true,
-          })}
-          label="Model"
-          placeholder="Model"
-        />
-        <TextField
-          {...commonCssForInput}
-          {...register('make', {
-            required: true,
-          })}
-          label="Make"
-          placeholder="Make"
-        />
-        <TextField
-          {...commonCssForInput}
-          {...register('year', {
-            required: true,
-          })}
-          label="Year"
-          placeholder="Year"
-        />
-        <TextField
-          {...commonCssForInput}
-          {...register('vinNumber')}
-          label="VIN#"
-          placeholder="VIN#"
-        />
-        <TextField
-          {...commonCssForInput}
-          {...register('licencePlate', {
-            required: true,
-          })}
-          label="License Plate"
-          placeholder="License Plate"
-        />
+      <TextField
+        {...commonCssForInput}
+        {...register(formType === 'trailer' ? 'trailerNo' : 'truckNo', {
+          required: [formType, 'No is required'].join(''),
+        })}
+        label={formType === 'trailer' ? 'TrailerNo' : 'TruckNo'}
+        placeholder={formType === 'trailer' ? 'TrailerNo' : 'TruckNo'}
+        error={!!errors.trailerNo}
+        helperText={<>{errors.trailerNo?.message}</>}
+      />
+      <TextField
+        {...commonCssForInput}
+        {...register('model', {
+          required: `Equipment model is required`,
+        })}
+        label="Model"
+        placeholder="Model"
+        error={!!errors.model}
+        helperText={<>{errors.model?.message}</>}
+      />
+      <TextField
+        {...commonCssForInput}
+        {...register('make', {
+          required: `Equipment make is required`,
+        })}
+        label="Make"
+        placeholder="Make"
+        helperText={<>{errors.make?.message}</>}
+        error={!!errors.make}
+      />
+      <TextField
+        {...commonCssForInput}
+        {...register('year', {
+          required: 'Equipment year is required',
+        })}
+        label="Year"
+        placeholder="Year"
+        helperText={<>{errors.year?.message}</>}
+        error={!!errors.year}
+      />
+      <TextField
+        {...commonCssForInput}
+        {...register('vinNumber')}
+        label="VIN#"
+        placeholder="VIN#"
+      />
+      <TextField
+        {...commonCssForInput}
+        {...register('licencePlate', {
+          required: 'Licence plate is required',
+        })}
+        label="License Plate"
+        placeholder="License Plate"
+        error={!!errors.licencePlate}
+        helperText={<>{errors.licencePlate?.message}</>}
+      />
 
+      <TextField
+        {...commonCssForInput}
+        {...register('licenceState', {
+          required:
+            'Licence plate state jurisdictions is required. For example: ON, MB, SK, AB, BC',
+        })}
+        label="License State"
+        placeholder="License plate state"
+        helperText={<>{errors.licenceState?.message}</>}
+        error={!!errors.licenceState}
+      />
+
+      <Controller
+        control={formControl}
+        name="safetyExpire"
+        defaultValue=""
+        rules={{
+          required: 'Annual safety expiry date is required',
+        }}
+        render={({
+          field: { ref, onBlur, name, onChange, ...field },
+          fieldState,
+        }) => {
+          return (
+            <DatePicker
+              {...{
+                ...field,
+                sx: commonCssForInput.sx,
+                inputRef: ref,
+                label: 'Safety Expire',
+                onChange: v => {
+                  onChange(
+                    format(new Date(v as unknown as Date), 'yyyy-MM-dd')
+                  );
+                },
+                slotProps: {
+                  textField: {
+                    onBlur,
+                    name,
+                    error: !!fieldState?.error,
+                    helperText: fieldState?.error?.message,
+                  },
+                },
+              }}
+            />
+          );
+        }}
+      />
+
+      {formType === 'trailer' && (
         <TextField
           {...commonCssForInput}
-          {...register('licenceState', {
-            required: true,
-          })}
-          label="License State"
-          placeholder="License plate state"
+          {...register('trailerAttributes')}
+          label="Trailer Attributes"
+          placeholder="Eg: Tri-axel, reefer"
         />
-        <AppDatePicker
-          pickerProps={{
-            label: 'Safety Expire',
-            sx: commonCssForInput.sx,
-            onChange: value => {
-              register('safetyExpire', {
-                required: true,
-                value: format(new Date(value as unknown as Date), 'yyyy-MM-dd'),
-              });
-            },
-          }}
-        />
+      )}
 
-        {formType === 'trailer' && (
-          <TextField
-            {...commonCssForInput}
-            {...register('trailerAttributes')}
-            label="Trailer Attributes"
-            placeholder="Eg: Tri-axel, reefer"
-          />
-        )}
+      <TextField
+        {...commonCssForInput}
+        {...register('notes')}
+        label="Notes"
+        placeholder="Notes"
+        multiline
+        rows={5}
+      />
 
-        <TextField
-          {...commonCssForInput}
-          {...register('notes')}
-          label="Notes"
-          placeholder="Notes"
-          multiline
-          rows={5}
-        />
-
-        <TextField
-          {...commonCssForInput}
-          {...register('files')}
-          placeholder="Docs"
-          type="file"
-          inputProps={{
-            multiple: true,
-          }}
-        />
-        <Button
-          type="submit"
-          variant="contained"
-          disabled={isLoading}
-          color="secondary"
-        >
-          Submit
-        </Button>
-      </AddTrailerFormWrapper>
-    </form>
+      <TextField
+        {...commonCssForInput}
+        {...register('files')}
+        placeholder="Docs"
+        type="file"
+        inputProps={{
+          multiple: true,
+        }}
+      />
+      <Button
+        type="submit"
+        variant="contained"
+        disabled={isLoading}
+        color="secondary"
+      >
+        Submit
+      </Button>
+    </Stack>
   );
 };
-export const AddTrailerFormWrapper = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: theme.spacing(2),
-}));
