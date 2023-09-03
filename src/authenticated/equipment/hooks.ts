@@ -406,6 +406,7 @@ export const deleteTruckGql = gql`
       safetyExpire
       licencePlate
       licenceState
+      filepath
     }
   }
 `;
@@ -424,6 +425,7 @@ export const deleteTrailerGql = gql`
       licencePlate
       licenceState
       safetyExpire
+      filepath
     }
   }
 `;

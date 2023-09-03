@@ -850,6 +850,7 @@ export type DeleteTruckMutation = {
     readonly safetyExpire: string;
     readonly licencePlate: string;
     readonly licenceState: string;
+    readonly filepath: ReadonlyArray<string | null> | null;
   } | null;
 };
 
@@ -864,5 +865,6 @@ export type DeleteTrailerMutation = {
     readonly licencePlate: string;
     readonly licenceState: string;
     readonly safetyExpire: string;
+    readonly filepath: ReadonlyArray<string | null> | null;
   } | null;
 };

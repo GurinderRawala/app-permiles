@@ -19,8 +19,8 @@ import { PopUpConfirmBoxProps, useAlert, usePopUpBox } from '../../../shared';
 import { useQueryClient } from 'react-query';
 import { AddEquipment } from './forms';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
-import { UploadResponse } from '../../hooks/file-upload-hook';
-import { omit } from 'lodash';
+import { UploadResponse, useFileDelete } from '../../hooks/file-upload-hook';
+import { noop, omit } from 'lodash';
 
 export declare type EquipmentGridActionsProps<Row extends Trailer | Truck> = {
   equipment: Row extends Trailer ? 'Trailer' : 'Truck';
@@ -58,6 +58,11 @@ export const DeleteEquipment: FC<DeleteEquipmentProps> = ({
   const { addAlert } = useAlert();
   const { addPopUpBox } = usePopUpBox();
 
+  const { mutate: deleteRelatedFile } = useFileDelete({
+    recordId: id,
+    repo: equipment === 'Truck' ? TRUCK_REPO : TRAILER_REPO,
+  });
+
   const client = useQueryClient();
 
   const commonAlerter = useCallback(
@@ -68,10 +73,38 @@ export const DeleteEquipment: FC<DeleteEquipmentProps> = ({
       errorMessage: string;
       successMessage: string;
     }) => ({
-      onSuccess: () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      onSuccess: res => {
         addAlert({
           type: 'success',
           message: successMessage,
+        });
+
+        // delete related file in the aws cloud.
+        let filepath: string[] = [];
+
+        if (res?.deleteTruck) {
+          filepath = res.deleteTruck?.filepath;
+        }
+
+        if (res?.deleteTrailer) {
+          filepath = res.deleteTrailer?.filepath;
+        }
+
+        // keys for the files related to this record
+        const keys: string[] =
+          filepath?.map((p: string) => JSON.parse(p).key) || [];
+
+        keys.forEach(key => {
+          if (!key?.length) {
+            return;
+          }
+
+          deleteRelatedFile({
+            fieldToUpdate: 'filepath',
+            filePath: key,
+          });
         });
 
         client.invalidateQueries(equipment.toLocaleLowerCase() + 's');
@@ -83,7 +116,7 @@ export const DeleteEquipment: FC<DeleteEquipmentProps> = ({
         });
       },
     }),
-    [addAlert, client, equipment]
+    [addAlert, client, deleteRelatedFile, equipment]
   );
 
   const onClick = () => {
@@ -145,7 +178,7 @@ const popUpOptionalProps: Omit<
     no: 'Close',
   },
   outerBoxProps: {
-    maxWidth: 'lg',
+    maxWidth: 'xl',
     PaperProps: {
       sx: theme => ({
         paddingTop: theme.spacing(8),
@@ -245,7 +278,7 @@ export const EditEquipment = <Row extends Trailer | Truck>({
                 }}
               />
             ),
-            callback: () => {},
+            callback: noop,
           },
           popUpOptionalProps
         );
@@ -268,7 +301,7 @@ export const EditEquipment = <Row extends Trailer | Truck>({
                 }}
               />
             ),
-            callback: () => {},
+            callback: noop,
           },
           popUpOptionalProps
         );

@@ -82,3 +82,33 @@ export const convertFilesToFormData = (files: FileList, formData: FormData) => {
     formData.append('files', fileArr[f], fileArr[f].name);
   }
 };
+
+export interface DeleteObjectOutput {
+  /**
+   * Specifies whether the versioned object that was permanently deleted was (true) or was not (false) a delete marker.
+   */
+  DeleteMarker?: boolean;
+  /**
+   * Returns the version ID of the delete marker created as a result of the DELETE operation.
+   */
+  VersionId?: string;
+  RequestCharged?: string;
+}
+
+export interface DeleteFilePayload {
+  /**
+   * Key to which the object was uploaded.
+   */
+  filePath: string;
+  /**
+   * Column name where we update filepath
+   */
+  fieldToUpdate: 'filepath';
+}
+
+export const useFileDelete = (payload: FileUploadParams) =>
+  useHttpMutation<
+    { msg: string; deleteFileData: DeleteObjectOutput },
+    unknown,
+    DeleteFilePayload
+  >(`/delete-file/${payload.recordId}/${payload.repo}`, 'post');
