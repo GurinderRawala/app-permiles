@@ -14,10 +14,12 @@ import {
   UseFormRegister,
 } from 'react-hook-form';
 import { format } from 'date-fns';
-import { DatePicker } from '@mui/x-date-pickers';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 import { Texts } from '../../../../shared/types';
 import dayjs from 'dayjs';
-// import dayjs from 'dayjs';
 
 export interface AddEquipmentProps {
   register: UseFormRegister<FieldValues>;
@@ -121,7 +123,9 @@ export const AddEquipment: FC<AddEquipmentProps> = ({
       <Controller
         control={formControl}
         name="safetyExpire"
-        defaultValue={dayjs(formControl._defaultValues.safetyExpire)}
+        defaultValue={dayjs(
+          formControl._defaultValues.safetyExpire || ''
+        ).format('YYYY-MM-DD')}
         rules={{
           required: 'Annual safety expiry date is required',
         }}
@@ -130,27 +134,31 @@ export const AddEquipment: FC<AddEquipmentProps> = ({
           fieldState,
         }) => {
           return (
-            <DatePicker
-              {...{
-                ...field,
-                sx: commonCssForInput.sx,
-                inputRef: ref,
-                label: 'Safety Expire',
-                onChange: v => {
-                  onChange(
-                    format(new Date(v as unknown as Date), 'yyyy-MM-dd')
-                  );
-                },
-                slotProps: {
-                  textField: {
-                    onBlur,
-                    name,
-                    error: !!fieldState?.error,
-                    helperText: fieldState?.error?.message,
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                {...{
+                  ...field,
+                  value: dayjs(field.value),
+                  sx: commonCssForInput.sx,
+                  inputRef: ref,
+                  label: 'Safety Expire',
+                  format: 'YYYY-MM-DD',
+                  onChange: v => {
+                    onChange(
+                      format(new Date(v as unknown as Date), 'yyyy-MM-dd')
+                    );
                   },
-                },
-              }}
-            />
+                  slotProps: {
+                    textField: {
+                      onBlur,
+                      name,
+                      error: !!fieldState?.error,
+                      helperText: fieldState?.error?.message,
+                    },
+                  },
+                }}
+              />
+            </LocalizationProvider>
           );
         }}
       />

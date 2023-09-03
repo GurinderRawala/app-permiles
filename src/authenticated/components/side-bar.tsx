@@ -96,17 +96,6 @@ export const LinkStyled = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
   fontSize: 'small',
   fontWeight: '500',
-
-  '&::after': {
-    content: '""',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: '100%',
-    height: 2,
-    backgroundColor: theme.palette.grey[700],
-    borderRadius: theme.spacing(1),
-  },
 }));
 
 export const SideBarStyled = styled(Box, {
@@ -124,7 +113,6 @@ export const SideBarStyled = styled(Box, {
   padding: theme.spacing(4, 2, 1, 2),
   boxShadow:
     '0px 11px 15px -7px rgba(96, 101, 117, 0.2), 0px 24px 38px 3px rgba(96, 101, 117, 0.14), 0px 9px 46px 8px rgba(96, 101, 117, 0.12)',
-  borderRadius: '0px 5px 5px 0',
 }));
 
 export const SideBarWrapper = styled(Box)(() => ({

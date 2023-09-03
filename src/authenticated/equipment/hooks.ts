@@ -311,6 +311,14 @@ export const useEquipmentForm = <
       return submitResponse.addTruck?.id || '';
     }
 
+    if ('updateTrailer' in submitResponse) {
+      return submitResponse.updateTrailer?.id || '';
+    }
+
+    if ('updateTruck' in submitResponse) {
+      return submitResponse?.updateTruck?.id || '';
+    }
+
     return '';
   }, [submitResponse]);
 
@@ -346,7 +354,7 @@ export const useEquipmentForm = <
         },
       });
     },
-    []
+    [callback, createEquipmentMutationVariables, mutate, reset]
   );
 
   useEffect(() => {

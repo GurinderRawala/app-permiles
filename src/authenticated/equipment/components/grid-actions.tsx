@@ -168,6 +168,7 @@ export const EditEquipment = <Row extends Trailer | Truck>({
 }): JSX.Element => {
   const { addAlert } = useAlert();
   const { addPopUpBox } = usePopUpBox();
+  const client = useQueryClient();
 
   const formCallback = (
     _: AddTrailerMutation | AddTruckMutation | UploadResponse[] | null,
@@ -179,13 +180,16 @@ export const EditEquipment = <Row extends Trailer | Truck>({
         type: 'error',
         message: 'Error while submitting.',
       });
+
       return;
     }
 
     addAlert({
       type: 'success',
-      message: 'Equipment added successfully',
+      message: 'Equipment updated successfully',
     });
+
+    client.invalidateQueries(equipment.toLocaleLowerCase() + 's');
   };
 
   const {
@@ -200,7 +204,7 @@ export const EditEquipment = <Row extends Trailer | Truck>({
     TRAILER_REPO,
     'filepath',
     formCallback,
-    data => ({ input: omit(data, 'files'), id: row.id }),
+    data => ({ input: omit(data, 'files', 'filepath'), id: row.id }),
     row
   );
 
@@ -216,11 +220,8 @@ export const EditEquipment = <Row extends Trailer | Truck>({
     TRUCK_REPO,
     'filepath',
     formCallback,
-    data => ({ input: omit(data, 'files'), id: row.id }),
-    {
-      ...row,
-      // safetyExpire: new Date(row.safetyExpire)
-    }
+    data => ({ input: omit(data, 'files', 'filepath'), id: row.id }),
+    row
   );
 
   const onClick = () => {

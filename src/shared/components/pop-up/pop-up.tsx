@@ -184,7 +184,7 @@ export const PopUpConfirmBox: FC<PopUpConfirmBoxProps> = ({
     }}
   >
     {titleProps.showTitle && (
-      <Typography fontSize={20} fontWeight={700} {...titleProps.props}>
+      <Typography fontSize={20} fontWeight={500} {...titleProps.props}>
         {texts.title}
       </Typography>
     )}
