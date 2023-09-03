@@ -32,6 +32,14 @@ export type Mutation = {
   readonly addTrip: Maybe<Trip>;
   readonly addTruck: Maybe<Truck>;
   readonly addUserAccount: Maybe<UserAccount>;
+  readonly deleteBroker: Maybe<Broker>;
+  readonly deleteDriver: Maybe<Driver>;
+  readonly deleteLoad: Maybe<Load>;
+  readonly deletePayroll: Maybe<Payroll>;
+  readonly deleteTrailer: Maybe<Trailer>;
+  readonly deleteTrip: Maybe<Trip>;
+  readonly deleteTruck: Maybe<Truck>;
+  readonly deleteUserAccount: Maybe<UserAccount>;
   readonly updateBroker: Maybe<Broker>;
   readonly updateDriver: Maybe<Driver>;
   readonly updateLoad: Maybe<Load>;
@@ -85,6 +93,46 @@ export type MutationAddTruckArgs = {
 /** Mutating data */
 export type MutationAddUserAccountArgs = {
   input: InputMaybe<UserAccountInput>;
+};
+
+/** Mutating data */
+export type MutationDeleteBrokerArgs = {
+  id: Scalars['ID'];
+};
+
+/** Mutating data */
+export type MutationDeleteDriverArgs = {
+  id: Scalars['ID'];
+};
+
+/** Mutating data */
+export type MutationDeleteLoadArgs = {
+  id: Scalars['ID'];
+};
+
+/** Mutating data */
+export type MutationDeletePayrollArgs = {
+  id: Scalars['ID'];
+};
+
+/** Mutating data */
+export type MutationDeleteTrailerArgs = {
+  id: Scalars['ID'];
+};
+
+/** Mutating data */
+export type MutationDeleteTripArgs = {
+  id: Scalars['ID'];
+};
+
+/** Mutating data */
+export type MutationDeleteTruckArgs = {
+  id: Scalars['ID'];
+};
+
+/** Mutating data */
+export type MutationDeleteUserAccountArgs = {
+  id: Scalars['ID'];
 };
 
 /** Mutating data */
@@ -788,5 +836,33 @@ export type UpdateTruckMutation = {
   readonly updateTruck: {
     readonly id: string;
     readonly truckNo: string;
+  } | null;
+};
+
+export type DeleteTruckMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type DeleteTruckMutation = {
+  readonly deleteTruck: {
+    readonly id: string;
+    readonly truckNo: string;
+    readonly safetyExpire: string;
+    readonly licencePlate: string;
+    readonly licenceState: string;
+  } | null;
+};
+
+export type DeleteTrailerMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type DeleteTrailerMutation = {
+  readonly deleteTrailer: {
+    readonly id: string;
+    readonly trailerNo: string;
+    readonly licencePlate: string;
+    readonly licenceState: string;
+    readonly safetyExpire: string;
   } | null;
 };

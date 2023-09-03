@@ -5,7 +5,7 @@ import { store } from './redux';
 import { PMQueryProvider } from './api';
 import { RouteProvider } from './router';
 import { NavigationProvider } from './authenticated/navigation';
-import { AlertProvider } from './shared';
+import { AlertProvider, PopUpBoxProvider } from './shared';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
@@ -17,9 +17,11 @@ export const App: FC = () => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <AlertProvider />
             {/* These are authenticated routes */}
-            <NavigationProvider>
-              <RouteProvider />
-            </NavigationProvider>
+            <PopUpBoxProvider>
+              <NavigationProvider>
+                <RouteProvider />
+              </NavigationProvider>
+            </PopUpBoxProvider>
           </LocalizationProvider>
         </ThemeProvider>
       </PMQueryProvider>

@@ -15,6 +15,9 @@ import {
 } from 'react-hook-form';
 import { format } from 'date-fns';
 import { DatePicker } from '@mui/x-date-pickers';
+import { Texts } from '../../../../shared/types';
+import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 
 export interface AddEquipmentProps {
   register: UseFormRegister<FieldValues>;
@@ -24,6 +27,7 @@ export interface AddEquipmentProps {
   formType: 'trailer' | 'truck';
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formControl: Control<any, any>;
+  texts?: Texts<'title'>;
 }
 export const AddEquipment: FC<AddEquipmentProps> = ({
   register,
@@ -32,6 +36,7 @@ export const AddEquipment: FC<AddEquipmentProps> = ({
   isLoading,
   formType,
   formControl,
+  texts,
 }) => {
   const commonCssForInput: TextFieldProps = {
     sx: {
@@ -42,7 +47,7 @@ export const AddEquipment: FC<AddEquipmentProps> = ({
   return (
     <Stack component="form" onSubmit={onSubmit} py={2} gap={2}>
       <Typography variant="h4" pb={2}>
-        {formType === 'trailer' ? 'Add Trailer' : 'Add Truck'}
+        {texts?.title || (formType === 'trailer' ? 'Add Trailer' : 'Add Truck')}
       </Typography>
       <TextField
         {...commonCssForInput}
@@ -116,7 +121,7 @@ export const AddEquipment: FC<AddEquipmentProps> = ({
       <Controller
         control={formControl}
         name="safetyExpire"
-        defaultValue=""
+        defaultValue={dayjs(formControl._defaultValues.safetyExpire)}
         rules={{
           required: 'Annual safety expiry date is required',
         }}

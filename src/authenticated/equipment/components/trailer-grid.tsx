@@ -6,6 +6,7 @@ import { GridColDef } from '@mui/x-data-grid';
 import { Trailer } from '../../../generated/graphql';
 import { FileDownload } from '../../components/file-download';
 import { Box } from '@mui/material';
+import { EquipmentGridActions } from './grid-actions';
 
 export const TrailerGrid: FC = () => {
   useLoginOnce();
@@ -77,8 +78,26 @@ export const TrailerGrid: FC = () => {
       field: 'notes',
       headerName: 'Notes',
       filterable: false,
-      width: 350,
+      sortable: false,
+      width: 200,
       valueGetter: ({ row }) => row.notes || '-',
+    },
+    {
+      field: ' ',
+      headerName: 'Actions',
+      filterable: false,
+      width: 150,
+      sortable: false,
+      renderCell: ({ row }) => {
+        return (
+          <EquipmentGridActions<Trailer>
+            {...{
+              row,
+              equipment: 'Trailer',
+            }}
+          />
+        );
+      },
     },
   ];
 

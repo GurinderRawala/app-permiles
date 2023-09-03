@@ -254,12 +254,20 @@ type Mutation {
     """update where id match"""
     id: String
   ): trailer
+  deleteTrailer(
+    """Delete record where id match"""
+    id: ID!
+  ): trailer
   updateTruck(
     """Truck input values"""
     input: truckModifiedInput
 
     """update where id match"""
     id: String
+  ): truck
+  deleteTruck(
+    """Delete record where id match"""
+    id: ID!
   ): truck
   updateUserAccount(
     """UserAccount input values"""
@@ -268,12 +276,20 @@ type Mutation {
     """update where id match"""
     id: String
   ): userAccount
+  deleteUserAccount(
+    """Delete record where id match"""
+    id: ID!
+  ): userAccount
   updateLoad(
     """Load input values"""
     input: loadModifiedInput
 
     """update where id match"""
     id: String
+  ): load
+  deleteLoad(
+    """Delete record where id match"""
+    id: ID!
   ): load
   updateBroker(
     """Broker input values"""
@@ -282,12 +298,20 @@ type Mutation {
     """update where id match"""
     id: String
   ): broker
+  deleteBroker(
+    """Delete record where id match"""
+    id: ID!
+  ): broker
   updateDriver(
     """Driver input values"""
     input: driverInput
 
     """update where id match"""
     id: String
+  ): driver
+  deleteDriver(
+    """Delete record where id match"""
+    id: ID!
   ): driver
   updateTrip(
     """Trip input values"""
@@ -296,12 +320,20 @@ type Mutation {
     """update where id match"""
     id: String
   ): trip
+  deleteTrip(
+    """Delete record where id match"""
+    id: ID!
+  ): trip
   updatePayroll(
     """Payroll input values"""
     input: payrollInput
 
     """update where id match"""
     id: String
+  ): payroll
+  deletePayroll(
+    """Delete record where id match"""
+    id: ID!
   ): payroll
   addClient(input: clientInput): client
 }

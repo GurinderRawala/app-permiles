@@ -1,10 +1,17 @@
 import { gql } from 'graphql-request';
-import { useGqlMutation, useGqlQuery, useHttpQuery } from '../../api';
+import {
+  UseGqlMutationOptions,
+  useGqlMutation,
+  useGqlQuery,
+  useHttpQuery,
+} from '../../api';
 import {
   AddTrailerMutation,
   AddTrailerMutationVariables,
   AddTruckMutation,
   AddTruckMutationVariables,
+  DeleteTruckMutation,
+  DeleteTruckMutationVariables,
   InputMaybe,
   TrailerModifiedInput,
   TrailersQuery,
@@ -382,3 +389,70 @@ export const useLoginOnce = () => {
 
   // console.log(query.data);
 };
+
+export const deleteTruckGql = gql`
+  mutation deleteTruck($id: ID!) {
+    deleteTruck(id: $id) {
+      id
+      truckNo
+      safetyExpire
+      licencePlate
+      licenceState
+    }
+  }
+`;
+
+export const useDeleteTruck = (options: UseGqlMutationOptions = {}) =>
+  useGqlMutation<DeleteTruckMutation, unknown, DeleteTruckMutationVariables>(
+    deleteTruckGql,
+    options
+  );
+
+export const deleteTrailerGql = gql`
+  mutation deleteTrailer($id: ID!) {
+    deleteTrailer(id: $id) {
+      id
+      trailerNo
+      licencePlate
+      licenceState
+      safetyExpire
+    }
+  }
+`;
+
+export const useDeleteTrailer = (options: UseGqlMutationOptions = {}) =>
+  useGqlMutation<DeleteTruckMutation, unknown, DeleteTruckMutationVariables>(
+    deleteTrailerGql,
+    options
+  );
+
+export const trailerUpdateGql = gql`
+  mutation updateTrailer($input: trailerModifiedInput, $id: String) {
+    updateTrailer(input: $input, id: $id) {
+      id
+      trailerNo
+    }
+  }
+`;
+
+export const useTrailerUpdate = (options: UseGqlMutationOptions = {}) =>
+  useGqlMutation<
+    UpdateTrailerMutation,
+    unknown,
+    UpdateTrailerMutationVariables
+  >(trailerUpdateGql, options);
+
+export const truckUpdateGql = gql`
+  mutation updateTruck($input: truckModifiedInput, $id: String) {
+    updateTruck(input: $input, id: $id) {
+      id
+      truckNo
+    }
+  }
+`;
+
+export const useTruckUpdate = (options: UseGqlMutationOptions = {}) =>
+  useGqlMutation<UpdateTruckMutation, unknown, UpdateTruckMutationVariables>(
+    truckUpdateGql,
+    options
+  );

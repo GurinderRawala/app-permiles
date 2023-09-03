@@ -3,15 +3,16 @@ import React, { FC } from 'react';
 import { LoadingOrError } from '../../components/loading';
 import { DataGrid } from '../../components/data-grid';
 import { GridColDef } from '@mui/x-data-grid';
-import { Trailer } from '../../../generated/graphql';
+import { Truck } from '../../../generated/graphql';
 import { FileDownload } from '../../components/file-download';
 import { Box } from '@mui/material';
 import { useTrucksQuery } from '../hooks';
+import { EquipmentGridActions } from './grid-actions';
 
 export const TruckGrid: FC = () => {
   const { data, isError, isLoading } = useTrucksQuery();
 
-  const columns: GridColDef<Trailer>[] = [
+  const columns: GridColDef<Truck>[] = [
     {
       field: 'id',
       headerName: 'ID',
@@ -79,6 +80,23 @@ export const TruckGrid: FC = () => {
       filterable: false,
       width: 350,
       valueGetter: ({ row }) => row.notes || '-',
+    },
+    {
+      field: ' ',
+      headerName: 'Actions',
+      filterable: false,
+      width: 150,
+      sortable: false,
+      renderCell: ({ row }) => {
+        return (
+          <EquipmentGridActions<Truck>
+            {...{
+              row,
+              equipment: 'Truck',
+            }}
+          />
+        );
+      },
     },
   ];
 
