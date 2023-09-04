@@ -27,7 +27,7 @@ export const BrokerGrid: FC = () => {
     {
       field: 'email',
       headerName: 'Email',
-      width: 150,
+      width: 300,
     },
     {
       field: 'phone',
@@ -42,7 +42,7 @@ export const BrokerGrid: FC = () => {
     {
       field: 'streetaddress',
       headerName: 'Address',
-      minWidth: 300,
+      width: 500,
       renderCell: ({ row }) => {
         const { streetaddress, city, province, postalcode, country } = row;
 
@@ -52,7 +52,7 @@ export const BrokerGrid: FC = () => {
     {
       field: ' ',
       headerName: 'Actions',
-      minWidth: 150,
+      width: 100,
       renderCell: ({ row }) => <BrokerGridActions {...{ row }} />,
     },
   ];

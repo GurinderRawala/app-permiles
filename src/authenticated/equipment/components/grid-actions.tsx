@@ -15,7 +15,7 @@ import {
   useUpdateTrailer,
   useUpdateTruck,
 } from '../hooks';
-import { PopUpConfirmBoxProps, useAlert, usePopUpBox } from '../../../shared';
+import { formPopUpOptionalProps, useAlert, usePopUpBox } from '../../../shared';
 import { useQueryClient } from 'react-query';
 import { AddEquipment } from './forms';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
@@ -169,30 +169,6 @@ export const DeleteEquipment: FC<DeleteEquipmentProps> = ({
   );
 };
 
-const popUpOptionalProps: Omit<
-  PopUpConfirmBoxProps,
-  'message' | 'children' | 'callback' | 'open' | 'onClickDeleteBox'
-> = {
-  yesButtonProps: {
-    showYesButton: false,
-  },
-  texts: {
-    title: ``,
-    yes: '',
-    no: 'Close',
-  },
-  outerBoxProps: {
-    maxWidth: 'lg',
-    PaperProps: {
-      sx: theme => ({
-        paddingTop: theme.spacing(8),
-        padding: theme.spacing(5),
-        flex: 'flex',
-      }),
-    },
-  },
-};
-
 const TRAILER_REPO = 'trailerRepo';
 const TRUCK_REPO = 'truckRepo';
 
@@ -293,7 +269,7 @@ export const EditEquipment = <Row extends Trailer | Truck>({
             ),
             callback: noop,
           },
-          popUpOptionalProps
+          formPopUpOptionalProps
         );
       case 'Truck':
         return addPopUpBox(
@@ -316,7 +292,7 @@ export const EditEquipment = <Row extends Trailer | Truck>({
             ),
             callback: noop,
           },
-          popUpOptionalProps
+          formPopUpOptionalProps
         );
 
       default:

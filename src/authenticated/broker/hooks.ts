@@ -95,7 +95,11 @@ export declare type BrokerFormVariable<T extends 'update' | 'add'> =
     : never;
 
 export declare type BrokerFormResponse<T extends 'update' | 'add'> =
-  T extends 'update' ? UpdateBrokerMutation : AddBrokerMutation;
+  T extends 'update'
+    ? UpdateBrokerMutation
+    : T extends 'add'
+    ? AddBrokerMutation
+    : never;
 
 export const useBrokerForm = <T extends 'update' | 'add'>(
   useBroker: BrokerFormHook<T>,

@@ -217,3 +217,27 @@ export const PopUpConfirmBox: FC<PopUpConfirmBoxProps> = ({
     </PopUpConfirmBoxButtonWrapper>
   </Dialog>
 );
+
+export const formPopUpOptionalProps: Omit<
+  PopUpConfirmBoxProps,
+  'message' | 'children' | 'callback' | 'open' | 'onClickDeleteBox'
+> = {
+  yesButtonProps: {
+    showYesButton: false,
+  },
+  texts: {
+    title: ``,
+    yes: '',
+    no: 'Close',
+  },
+  outerBoxProps: {
+    maxWidth: 'lg',
+    PaperProps: {
+      sx: theme => ({
+        paddingTop: theme.spacing(8),
+        padding: theme.spacing(5),
+        flex: 'flex',
+      }),
+    },
+  },
+};
