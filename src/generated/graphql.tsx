@@ -17,7 +17,6 @@ export type Scalars = {
   Int: number;
   Float: number;
   /** A special custom Scalar type for Dates that converts to a ISO formatted string  */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Date: any;
 };
 
@@ -52,7 +51,7 @@ export type Mutation = {
 
 /** Mutating data */
 export type MutationAddBrokerArgs = {
-  input: InputMaybe<BrokerInput>;
+  input: InputMaybe<BrokerModifiedInput>;
 };
 
 /** Mutating data */
@@ -138,7 +137,7 @@ export type MutationDeleteUserAccountArgs = {
 /** Mutating data */
 export type MutationUpdateBrokerArgs = {
   id: InputMaybe<Scalars['String']>;
-  input: InputMaybe<BrokerInput>;
+  input: InputMaybe<BrokerModifiedInput>;
 };
 
 /** Mutating data */
@@ -316,6 +315,30 @@ export type BrokerInput = {
   readonly province: InputMaybe<Scalars['String']>;
   readonly streetaddress: InputMaybe<Scalars['String']>;
   readonly updatedAt: InputMaybe<Scalars['Date']>;
+};
+
+/** Broker modified input information */
+export type BrokerModifiedInput = {
+  /** City of the broker */
+  readonly city: InputMaybe<Scalars['String']>;
+  /** Contact name at the broker`s office */
+  readonly contactname: InputMaybe<Scalars['String']>;
+  /** Country of the broker. */
+  readonly country: InputMaybe<Scalars['String']>;
+  /** Email address of the broker. */
+  readonly email: InputMaybe<Scalars['String']>;
+  /** The uuid of broker, automatically generated if not provided. */
+  readonly id: InputMaybe<Scalars['ID']>;
+  /** Name of the broker. */
+  readonly name: InputMaybe<Scalars['String']>;
+  /** Phone number of the broker */
+  readonly phone: InputMaybe<Scalars['String']>;
+  /** Post code address of broker. */
+  readonly postalcode: InputMaybe<Scalars['String']>;
+  /** Province of the broker. */
+  readonly province: InputMaybe<Scalars['String']>;
+  /** Street address of the broker */
+  readonly streetaddress: InputMaybe<Scalars['String']>;
 };
 
 export type Client = {
@@ -754,6 +777,39 @@ export type BrokersQuery = {
     readonly postalcode: string;
     readonly country: string;
   } | null> | null;
+};
+
+export type AddBrokerMutationVariables = Exact<{
+  input: InputMaybe<BrokerModifiedInput>;
+}>;
+
+export type AddBrokerMutation = {
+  readonly addBroker: {
+    readonly id: string;
+    readonly name: string;
+    readonly email: string;
+  } | null;
+};
+
+export type UpdateBrokerMutationVariables = Exact<{
+  input: InputMaybe<BrokerModifiedInput>;
+  id: InputMaybe<Scalars['String']>;
+}>;
+
+export type UpdateBrokerMutation = {
+  readonly updateBroker: {
+    readonly id: string;
+    readonly name: string;
+    readonly email: string;
+  } | null;
+};
+
+export type DeleteBrokerMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type DeleteBrokerMutation = {
+  readonly deleteBroker: { readonly id: string; readonly name: string } | null;
 };
 
 export type TrailersQueryVariables = Exact<{

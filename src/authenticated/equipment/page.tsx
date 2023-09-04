@@ -26,7 +26,7 @@ export const EquipmentPage: FC = () => {
   const { addAlert } = useAlert();
 
   const formCallback = (
-    _: AddTrailerMutation | AddTruckMutation | UploadResponse[] | null,
+    _: AddTrailerMutation | AddTruckMutation | UploadResponse | null,
     err?: unknown
   ) => {
     if (err) {

@@ -19,7 +19,11 @@ import { PopUpConfirmBoxProps, useAlert, usePopUpBox } from '../../../shared';
 import { useQueryClient } from 'react-query';
 import { AddEquipment } from './forms';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
-import { UploadResponse, useFileDelete } from '../../hooks/file-upload-hook';
+import {
+  UploadResponse,
+  UploadResponseData,
+  useFileDelete,
+} from '../../hooks/file-upload-hook';
 import { noop, omit } from 'lodash';
 
 export declare type EquipmentGridActionsProps<Row extends Trailer | Truck> = {
@@ -178,7 +182,7 @@ const popUpOptionalProps: Omit<
     no: 'Close',
   },
   outerBoxProps: {
-    maxWidth: 'xl',
+    maxWidth: 'lg',
     PaperProps: {
       sx: theme => ({
         paddingTop: theme.spacing(8),
@@ -204,7 +208,7 @@ export const EditEquipment = <Row extends Trailer | Truck>({
   const client = useQueryClient();
 
   const formCallback = (
-    _: AddTrailerMutation | AddTruckMutation | UploadResponse[] | null,
+    res: AddTrailerMutation | AddTruckMutation | UploadResponse | null,
     err?: unknown
   ) => {
     if (err) {
@@ -223,6 +227,15 @@ export const EditEquipment = <Row extends Trailer | Truck>({
     });
 
     client.invalidateQueries(equipment.toLocaleLowerCase() + 's');
+
+    if (res && 'fileUploadResponse' in res) {
+      const { fileUploadResponse = [] } = res as UploadResponse;
+
+      fileUploadResponse?.forEach((f: UploadResponseData) => {
+        const queryKey = ['file', f.Key];
+        client.invalidateQueries(queryKey);
+      });
+    }
   };
 
   const {

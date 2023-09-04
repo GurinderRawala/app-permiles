@@ -51,6 +51,39 @@ input brokerInput {
   updatedAt: Date
 }
 
+"""Broker modified input information"""
+input brokerModifiedInput {
+  """The uuid of broker, automatically generated if not provided."""
+  id: ID
+
+  """Name of the broker."""
+  name: String
+
+  """Street address of the broker"""
+  streetaddress: String
+
+  """City of the broker"""
+  city: String
+
+  """Post code address of broker."""
+  postalcode: String
+
+  """Province of the broker."""
+  province: String
+
+  """Country of the broker."""
+  country: String
+
+  """Email address of the broker."""
+  email: String
+
+  """Phone number of the broker"""
+  phone: String
+
+  """Contact name at the broker`s office"""
+  contactname: String
+}
+
 type client {
   id: String!
   name: String!
@@ -233,7 +266,7 @@ type Mutation {
   ): load
   addBroker(
     """Broker input values"""
-    input: brokerInput
+    input: brokerModifiedInput
   ): broker
   addDriver(
     """Driver input values"""
@@ -293,7 +326,7 @@ type Mutation {
   ): load
   updateBroker(
     """Broker input values"""
-    input: brokerInput
+    input: brokerModifiedInput
 
     """update where id match"""
     id: String

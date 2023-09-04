@@ -6,6 +6,7 @@ import { GridColDef } from '@mui/x-data-grid';
 import { Broker } from '../../../generated/graphql';
 import { Box } from '@mui/material';
 import { useBrokerQuery } from '../hooks';
+import { BrokerGridActions } from './grid-actions';
 
 export const BrokerGrid: FC = () => {
   const { data, isError, isLoading } = useBrokerQuery();
@@ -47,6 +48,12 @@ export const BrokerGrid: FC = () => {
 
         return `${streetaddress}, ${city} ${province} ${postalcode} ${country}`;
       },
+    },
+    {
+      field: ' ',
+      headerName: 'Actions',
+      minWidth: 150,
+      renderCell: ({ row }) => <BrokerGridActions {...{ row }} />,
     },
   ];
 

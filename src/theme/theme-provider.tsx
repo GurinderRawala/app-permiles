@@ -4,7 +4,9 @@ import {
   Palette,
   ThemeProvider as TP,
   createTheme,
+  darkScrollbar,
 } from '@mui/material';
+import { grey } from '@mui/material/colors';
 import { useSelector } from 'react-redux';
 import { Store } from '../redux';
 import './font-family.css';
@@ -44,6 +46,19 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
       MuiCssBaseline: {
         styleOverrides: {
           fontFamily: '"Titillium Web", sans-serif',
+          html: {
+            ...darkScrollbar(
+              mode === 'light'
+                ? {
+                    track: grey[200],
+                    thumb: grey[400],
+                    active: grey[400],
+                  }
+                : undefined
+            ),
+            //scrollbarWidth for Firefox
+            scrollbarWidth: 'thin',
+          },
         },
       },
       MuiTab: {
@@ -67,7 +82,7 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <TP theme={theme}>
-      <CssBaseline />
+      <CssBaseline enableColorScheme />
       {children}
     </TP>
   );

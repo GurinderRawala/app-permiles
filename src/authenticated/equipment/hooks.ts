@@ -275,7 +275,7 @@ export const useEquipmentForm = <
   repoKey: string,
   fieldToUpdate: string,
   callback: (
-    res: AddTrailerMutation | AddTruckMutation | UploadResponse[] | null,
+    res: AddTrailerMutation | AddTruckMutation | UploadResponse | null,
     err?: unknown
   ) => void,
   createEquipmentMutationVariables: CreateEquipmentMutationVariables<T, D>,

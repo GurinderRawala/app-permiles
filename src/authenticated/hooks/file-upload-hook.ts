@@ -38,7 +38,7 @@ export type UploadResponse = {
 export const useFileUpload = (payload: FileUploadParams) => {
   const { recordId, repo } = payload;
   const { mutate, isError, isLoading, data } = useHttpMutation<
-    UploadResponse[],
+    UploadResponse,
     unknown,
     FormData
   >(`/upload-file/${recordId}/${repo}`, 'post');
@@ -58,8 +58,8 @@ export declare type FileUploadBody = {
 
 export const mutateUploadFile = (
   body: FileUploadBody,
-  uploadFiles: UseMutateFunction<UploadResponse[], unknown, FormData>,
-  callback: (res: UploadResponse[] | null, err?: unknown) => void
+  uploadFiles: UseMutateFunction<UploadResponse, unknown, FormData>,
+  callback: (res: UploadResponse | null, err?: unknown) => void
 ) => {
   const { fieldToUpdate, files } = body;
   const formData = new FormData();
