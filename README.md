@@ -1,7 +1,7 @@
 ## app-permiles
 
 
-**[PerMiles](https://permiles.com) software UI**
+**Software UI**
 
 ```shell
 
